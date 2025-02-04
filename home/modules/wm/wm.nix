@@ -1,8 +1,8 @@
 {...}: let
-  moduleBase = "";
+  moduleBase = "wm";
   argSet = {"moduleBase" = moduleBase;};
 in {
   imports = [
-    (import ./submodule.nix argSet)
+    (import ./hyprland/hyprland.nix argSet)
   ];
 }

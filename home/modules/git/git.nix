@@ -1,8 +1,8 @@
 {...}: let
-  moduleBase = "";
+  moduleBase = "git";
   argSet = {"moduleBase" = moduleBase;};
 in {
   imports = [
-    (import ./submodule.nix argSet)
+    (import ./gitConfig.nix argSet)
   ];
 }

@@ -1,8 +1,8 @@
 {...}: let
-  moduleBase = "";
+  moduleBase = "browsers";
   argSet = {"moduleBase" = moduleBase;};
 in {
   imports = [
-    (import ./submodule.nix argSet)
+    (import ./firefox.nix argSet)
   ];
 }

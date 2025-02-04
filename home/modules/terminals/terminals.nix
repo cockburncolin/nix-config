@@ -1,8 +1,8 @@
 {...}: let
-  moduleBase = "";
+  moduleBase = "terminals";
   argSet = {"moduleBase" = moduleBase;};
 in {
   imports = [
-    (import ./submodule.nix argSet)
+    (import ./kitty.nix argSet)
   ];
 }
