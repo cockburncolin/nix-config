@@ -19,6 +19,67 @@ in {
   config = lib.mkIf config."${moduleBase}"."${moduleName}".enable {
     programs.firefox = {
       enable = true;
+      policies = {
+        DisableTelemetry = true;
+        DisableFirefoxStudies = true;
+        PasswordManagerEnabled = false;
+        DisablePocket = true;
+        DisplayBookmarksToolbar = "always";
+        NoDefaultBookmarks = true;
+        OverrideFirstRunPage = "";
+        OfferToSaveLogins = false;
+        HttpsOnlyMode = "enabled";
+
+        UserMessaging = {
+          UrlbarInterventions = false;
+          SkipOnboarding = true;
+        };
+
+        FirefoxHome = {
+          TopSites = false;
+          SponsoredTopSites = false;
+          Highlights = false;
+          Pocket = false;
+          SponseredPocket = false;
+          Snippets = false;
+        };
+
+        Permissions = {
+          Location = {
+            BlockNewRequests = true;
+            Allow = ["https://www.playnow.com/"];
+          };
+          Microphone = {
+            BlockNewRequests = true;
+            Allow = ["https://teams.microsoft.com/" "https://zoom.com"];
+          };
+          Notifications = {BlockNewRequests = true;};
+          Camera = {BlockNewRequests = true;};
+          VirtualReality = {BlockNewRequests = true;};
+        };
+        Preferences = {
+          "browser.urlbar.suggest.searches" = true; # Need this for basic search suggestions
+          "browser.urlbar.shortcuts.bookmarks" = false;
+          "browser.urlbar.shortcuts.history" = false;
+          "browser.urlbar.shortcuts.tabs" = false;
+
+          "browser.tabs.tabMinWidth" = 75; # Make tabs able to be smaller to prevent scrolling
+
+          "browser.aboutConfig.showWarning" = false; # No warning when going to config
+          "browser.warnOnQuitShortcut" = false;
+
+          "browser.tabs.loadInBackground" = true; # Load tabs automatically
+
+          "media.ffmpeg.vaapi.enabled" = true; # Enable hardware acceleration
+          "layers.acceleration.force-enabled" = true;
+          "gfx.webrender.all" = true;
+
+          "extensions.autoDisableScopes" = 0; # Automatically enable extensions
+          "extensions.update.enabled" = false;
+
+          "widget.use-xdg-desktop-portal.file-picker" = 1; # Use new gtk file picker instead of legacy one
+        };
+      };
       profiles.default = {
         id = 0;
         isDefault = true;
@@ -36,32 +97,31 @@ in {
           "media.eme.enabled" = true;
           "signon.autofillForms" = false;
         };
-
         bookmarks = [
           {
-            name = "wikipedia";
-            tags = ["wiki"];
-            keyword = "wiki";
-            url = "https://en.wikipedia.org/wiki/Special:Search?search=%s&go=Go";
-          }
-          {
-            name = "kernel.org";
-            url = "https://www.kernel.org";
-          }
-          {
-            name = "Nix sites";
+            #Toolbar Folder
+            name = "toolbar";
             toolbar = true;
             bookmarks = [
               {
-                name = "homepage";
-                url = "https://nixos.org/";
-              }
-              {
-                name = "wiki";
-                tags = ["wiki" "nix"];
-                url = "https://wiki.nixos.org/";
+                # Folder in the Toolbar
+                name = "foldername";
+                bookmarks = [
+                  {
+                    # bookmark in the folder in the toolbar
+                    name = "example";
+                    url = "https://example.com";
+                    keyword = "";
+                  }
+                ];
               }
             ];
+          }
+          {
+            #bookmark in Bookmarks menu
+            name = "example2";
+            url = "https://example2.com";
+            keyword = "";
           }
         ];
         search = {
