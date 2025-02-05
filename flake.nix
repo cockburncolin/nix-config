@@ -54,7 +54,13 @@
     homeConfigurations.desktop = home-manager.lib.homeManagerConfiguration {
       inherit pkgs;
       extraSpecialArgs = {inherit firefox-adds;};
-      modules = [./home/home.nix];
+      modules = [./home/hosts/desktop.nix];
+    };
+
+    homeConfigurations.laptop = home-manager.lib.homeManagerConfiguration {
+      inherit pkgs;
+      extraSpecialArgs = {inherit firefox-adds;};
+      modules = [./home/hosts/laptop.nix];
     };
   };
 }
