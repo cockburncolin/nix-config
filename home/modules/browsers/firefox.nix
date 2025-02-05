@@ -86,30 +86,32 @@ in {
         isDefault = true;
         name = "default";
         extensions = with firefox-adds; [
-          privacy-badger
           bitwarden
+          darkreader
+          privacy-badger
           ublock-origin
+          youtube-shorts-block
         ];
         settings = {
           "browser.aboutConfig.showWarning" = false;
           "browser.search.defaultenginename" = "Searx";
           "browser.search.order.1" = "Searx";
+          "browser.tabs.closeWindowWithLastTab" = false;
           "browser.toolbarbuttons.introduced.pocket-button" = false;
           "browser.toolbars.bookmarks.visibility" = "always";
-          "browser.tabs.closeWindowWithLastTab" = false;
-          "toolkit.cosmeticAnimations.enabled" = false;
+          "extensions.autoDisableScopes" = 0;
+          "extensions.formautofill.addresses.enabled" = false;
+          "extensions.formautofill.creditCards.enabled" = false;
+          "extensions.pocket.enabled" = false;
           "full-screen-api.transition-duration.enter" = "0 0";
           "full-screen-api.transition-duration.leave" = "0 0";
           "full-screen-api.transition.timeout" = "0";
           "full-screen-api.warning.delay" = "0";
           "full-screen-api.warning.timeout" = "0";
-          "extensions.autoDisableScopes" = 0;
-          "extensions.formautofill.addresses.enabled" = false;
-          "extensions.formautofill.creditCards.enabled" = false;
-          "extensions.pocket.enabled" = false;
           "general.autoScroll" = true;
           "media.eme.enabled" = true;
           "signon.autofillForms" = false;
+          "toolkit.cosmeticAnimations.enabled" = false;
         };
         bookmarks = [
           {
