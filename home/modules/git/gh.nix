@@ -1,13 +1,18 @@
 # Takes moduleBase from importing file
-{moduleBase ? "misc"}: {
+{
+  moduleBase ? "misc",
+}:
+{
   config,
   lib,
   pkgs,
   ...
-}: let
+}:
+let
   moduleName = "ghCli";
-in {
-  imports = [];
+in
+{
+  imports = [ ];
 
   options = {
     "${moduleBase}"."${moduleName}" = {
@@ -19,7 +24,6 @@ in {
     };
   };
 
-  config =
-    lib.mkIf config."${moduleBase}"."${moduleName}".enable {
-    };
+  config = lib.mkIf config."${moduleBase}"."${moduleName}".enable {
+  };
 }

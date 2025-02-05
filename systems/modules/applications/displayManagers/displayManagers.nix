@@ -1,11 +1,12 @@
 { ... }:
 let
-	moduleBase = "apps.displayManagers";
-	argSet = { "moduleBase" = moduleBase; };
-in 
+  moduleBase = "apps.displayManagers";
+  argSet = {
+    "moduleBase" = moduleBase;
+  };
+in
 {
-	imports = [ 
-		(import ./sddm.nix argSet)
-	];
+  imports = [
+    (import ./sddm.nix argSet)
+  ];
 }
-

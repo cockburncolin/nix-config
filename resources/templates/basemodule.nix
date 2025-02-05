@@ -1,7 +1,11 @@
-{...}: let
+{ ... }:
+let
   moduleBase = "";
-  argSet = {"moduleBase" = moduleBase;};
-in {
+  argSet = {
+    "moduleBase" = moduleBase;
+  };
+in
+{
   imports = [
     (import ./submodule.nix argSet)
   ];

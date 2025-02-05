@@ -25,36 +25,38 @@
     };
   };
 
-  outputs = {
-    self,
-    alejandra,
-    anyrun,
-    home-manager,
-    nixpkgs,
-    firefox-addons,
-    ...
-  } @ inputs: let
-    # Default arch
-    system = "x86_64-linux";
-    pkgs = nixpkgs.legacyPackages.${system};
-    firefox-adds = firefox-addons.packages.${system};
-  in {
-    nixosConfigurations = {
-      desktop = nixpkgs.lib.nixosSystem {
-        specialArgs = {inherit inputs;};
-        modules = [./systems/hosts/desktop/config.nix];
+  outputs =
+    {
+      self,
+      alejandra,
+      anyrun,
+      home-manager,
+      nixpkgs,
+      firefox-addons,
+      ...
+    }@inputs:
+    let
+      system = "x86_64-linux";
+      pkgs = nixpkgs.legacyPackages.${system};
+      firefox-adds = firefox-addons.packages.${system};
+    in
+    {
+      nixosConfigurations = {
+        desktop = nixpkgs.lib.nixosSystem {
+          specialArgs = { inherit inputs; };
+          modules = [ ./systems/hosts/desktop/config.nix ];
+        };
+
+        laptop = nixpkgs.lib.nixosSystem {
+          specialArgs = { inherit inputs; };
+          modules = [ ./systems/hosts/laptop/config.nix ];
+        };
       };
 
-      laptop = nixpkgs.lib.nixosSystem {
-        specialArgs = {inherit inputs;};
-        modules = [./systems/hosts/laptop/config.nix];
+      homeConfigurations.desktop = home-manager.lib.homeManagerConfiguration {
+        inherit pkgs;
+        extraSpecialArgs = { inherit firefox-adds; };
+        modules = [ ./home/home.nix ];
       };
     };
-
-    homeConfigurations.desktop = home-manager.lib.homeManagerConfiguration {
-      inherit pkgs;
-      extraSpecialArgs = {inherit firefox-adds;};
-      modules = [./home/home.nix];
-    };
-  };
 }
