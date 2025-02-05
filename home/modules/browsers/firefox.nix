@@ -11,7 +11,7 @@ in {
     "${moduleBase}"."${moduleName}" = {
       enable = lib.mkOption {
         default = true;
-        description = "manage firefox browser";
+        description = "manage ${moduleName}";
       };
     };
   };
@@ -36,18 +36,30 @@ in {
           "media.eme.enabled" = true;
           "signon.autofillForms" = false;
         };
+
         bookmarks = [
           {
-            name = "Stores";
+            name = "wikipedia";
+            tags = ["wiki"];
+            keyword = "wiki";
+            url = "https://en.wikipedia.org/wiki/Special:Search?search=%s&go=Go";
+          }
+          {
+            name = "kernel.org";
+            url = "https://www.kernel.org";
+          }
+          {
+            name = "Nix sites";
             toolbar = true;
             bookmarks = [
               {
-                name = "Amazon";
-                url = "https://amazon.ca";
+                name = "homepage";
+                url = "https://nixos.org/";
               }
               {
-                name = "Chrono24";
-                url = "https://chrono24.com";
+                name = "wiki";
+                tags = ["wiki" "nix"];
+                url = "https://wiki.nixos.org/";
               }
             ];
           }
@@ -75,6 +87,26 @@ in {
               ];
               icon = "''${pkgs.nixos-icons}/share/icons/hicolor/scalable/apps/nix-snowflake.svg";
               definedAliases = ["@np"];
+            };
+            "Home Manager Options" = {
+              urls = [
+                {
+                  template = "https://home-manager-options.extranix.com/";
+                  params = [
+                    {
+                      name = "release";
+                      value = "master";
+                    }
+                    {
+                      name = "query";
+                      value = "{searchTerms}";
+                    }
+                  ];
+                }
+              ];
+              iconUpdateURL = "https://nixos.wiki/favicon.png";
+              updateInterval = 24 * 60 * 60 * 1000; # every day
+              definedAliases = ["@hm"];
             };
             "NixOS Wiki" = {
               urls = [
