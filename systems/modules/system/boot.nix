@@ -57,7 +57,7 @@ in
           };
 
       # Fix for F keys on QK75 wireless mode
-      kernelParams = [ "hid_aple.fnmode=2" ];
+      kernelParams = [ "hid_apple.fnmode=2" ];
     };
   };
 }
