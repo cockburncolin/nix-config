@@ -6,7 +6,7 @@
   inputs,
   ...
 }: {
-  imports = [./modules/bundle.nix];
+  imports = [../modules/bundle.nix];
 
   config = {
     home.username = "colin";
