@@ -18,11 +18,17 @@ in
 	};
 
 	config = lib.mkIf config."${moduleBase}"."${moduleName}".enable {
+		programs.neovim = {
+			enable = true;
+			vimAlias = true;
+			viAlias = true;
+		};
 		environment.systemPackages = with pkgs; [
 			efibootmgr
 			git
-			wget
 			nano
+			tree
+			wget
 		];
 
 	};
