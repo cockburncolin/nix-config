@@ -39,7 +39,7 @@ in {
       };
 
       shellAliases = {
-        hms = "home-manager switch --flake ~nix";
+        hms = "home-manager switch --flake ~nix#desktop";
       };
 
       dirHashes = {

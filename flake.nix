@@ -18,19 +18,26 @@
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    firefox-addons = {
+      url = "gitlab:rycee/nur-expressions?dir=pkgs/firefox-addons";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = {
     self,
-    nixpkgs,
-    home-manager,
     alejandra,
     anyrun,
+    home-manager,
+    nixpkgs,
+    firefox-addons,
     ...
   } @ inputs: let
     # Default arch
     system = "x86_64-linux";
     pkgs = nixpkgs.legacyPackages.${system};
+    firefox-adds = firefox-addons.packages.${system};
   in {
     nixosConfigurations = {
       desktop = nixpkgs.lib.nixosSystem {
@@ -44,8 +51,9 @@
       };
     };
 
-    homeConfigurations.colin = home-manager.lib.homeManagerConfiguration {
+    homeConfigurations.desktop = home-manager.lib.homeManagerConfiguration {
       inherit pkgs;
+      extraSpecialArgs = {inherit firefox-adds;};
       modules = [./home/home.nix];
     };
   };

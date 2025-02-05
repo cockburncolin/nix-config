@@ -1,10 +1,12 @@
 # template for hosts
-{ ... }:
-{
-	imports = [ 
-		../../modules/bundle.nix
-		./hardware-config.nix
-	];
+{...}: {
+  imports = [
+    ../../modules/bundle.nix
+    ./hardware-config.nix
+  ];
 
-	config = {};
+  config = {
+    time.timeZone = "America/Vancouver";
+    networking.hostName = "caeser";
+  };
 }
