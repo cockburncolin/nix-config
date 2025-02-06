@@ -26,6 +26,7 @@ in
 
   config = lib.mkIf config."${moduleBase}"."${moduleName}".enable {
     programs.hyprland.enable = true;
+    programs.hyprland.withUWSM = false;
 
     environment = {
       # default hyprland config uses kitty, download it in case bootable but something don't work

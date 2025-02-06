@@ -53,6 +53,10 @@ in
       # both over
       image = ../../../resources/wallpapers/${config.${moduleBase}.${moduleName}.wallpaper};
       base16Scheme = "${pkgs.base16-schemes}/share/themes/onedark.yaml";
+      cursor = {
+        name = "Bibata-Modern-Ice";
+        package = pkgs.bibata-cursors;
+      };
     };
   };
 }
