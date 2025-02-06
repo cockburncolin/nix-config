@@ -1,13 +1,18 @@
-{moduleBase ? "misc"}: {
+{
+  moduleBase ? "misc",
+}:
+{
   config,
   inputs,
   pkgs,
   lib,
   firefox-adds,
   ...
-}: let
+}:
+let
   moduleName = "firefox";
-in {
+in
+{
   options = {
     "${moduleBase}"."${moduleName}" = {
       enable = lib.mkOption {
@@ -48,15 +53,24 @@ in {
         Permissions = {
           Location = {
             BlockNewRequests = true;
-            Allow = ["https://www.playnow.com/"];
+            Allow = [ "https://www.playnow.com/" ];
           };
           Microphone = {
             BlockNewRequests = true;
-            Allow = ["https://teams.microsoft.com/" "https://zoom.com"];
+            Allow = [
+              "https://teams.microsoft.com/"
+              "https://zoom.com"
+            ];
           };
-          Notifications = {BlockNewRequests = true;};
-          Camera = {BlockNewRequests = true;};
-          VirtualReality = {BlockNewRequests = true;};
+          Notifications = {
+            BlockNewRequests = true;
+          };
+          Camera = {
+            BlockNewRequests = true;
+          };
+          VirtualReality = {
+            BlockNewRequests = true;
+          };
         };
         Preferences = {
           "browser.urlbar.suggest.searches" = true; # Need this for basic search suggestions
@@ -145,7 +159,7 @@ in {
         search = {
           force = true;
           default = "Searx";
-          order = ["Searx"];
+          order = [ "Searx" ];
           engines = {
             "Nix Packages" = {
               urls = [
@@ -164,7 +178,7 @@ in {
                 }
               ];
               icon = "''${pkgs.nixos-icons}/share/icons/hicolor/scalable/apps/nix-snowflake.svg";
-              definedAliases = ["@np"];
+              definedAliases = [ "@np" ];
             };
             "Home Manager Options" = {
               urls = [
@@ -184,7 +198,7 @@ in {
               ];
               iconUpdateURL = "https://nixos.wiki/favicon.png";
               updateInterval = 24 * 60 * 60 * 1000; # every day
-              definedAliases = ["@hm"];
+              definedAliases = [ "@hm" ];
             };
             "NixOS Wiki" = {
               urls = [
@@ -194,7 +208,7 @@ in {
               ];
               iconUpdateURL = "https://nixos.wiki/favicon.png";
               updateInterval = 24 * 60 * 60 * 1000; # every day
-              definedAliases = ["@nw"];
+              definedAliases = [ "@nw" ];
             };
             "Searx" = {
               urls = [
@@ -210,7 +224,7 @@ in {
               ];
               iconUpdateURL = "https://upload.wikimedia.org/wikipedia/commons/b/b7/SearXNG-wordmark.svg";
               updateInterval = 24 * 60 * 60 * 1000; # every day
-              definedAliases = ["@searx"];
+              definedAliases = [ "@searx" ];
             };
             "Bing".metaData.hidden = true;
             "Google".metaData.hidden = true;

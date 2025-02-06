@@ -1,11 +1,16 @@
-{moduleBase ? "misc"}: {
+{
+  moduleBase ? "misc",
+}:
+{
   lib,
   config,
   pkgs,
   ...
-}: let
+}:
+let
   moduleName = "gitConfig";
-in {
+in
+{
   options = {
     "${moduleBase}"."${moduleName}" = {
       enable = lib.mkOption {
@@ -25,8 +30,12 @@ in {
       };
       enable = true;
       extraConfig = {
-        push = {autoSetupRemote = true;};
-        init = {defaultBranch = "master";};
+        push = {
+          autoSetupRemote = true;
+        };
+        init = {
+          defaultBranch = "master";
+        };
       };
       userEmail = "51009168+cockburncolin@users.noreply.github.com";
       userName = "cockburncolin";

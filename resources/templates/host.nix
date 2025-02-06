@@ -1,7 +1,7 @@
 # template for hosts
 { ... }:
 {
-	imports = [ ../../modules/bundle.nix ];
+  imports = [ ../../modules/bundle.nix ];
 
-	config = {};
+  config = { };
 }

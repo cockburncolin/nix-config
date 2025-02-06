@@ -1,7 +1,11 @@
-{...}: let
+{ ... }:
+let
   moduleBase = "media";
-  argSet = {"moduleBase" = moduleBase;};
-in {
+  argSet = {
+    "moduleBase" = moduleBase;
+  };
+in
+{
   imports = [
     (import ./mpv.nix argSet)
   ];

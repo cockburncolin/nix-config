@@ -1,13 +1,18 @@
 # Takes moduleBase from importing file
-{moduleBase ? "misc"}: {
+{
+  moduleBase ? "misc",
+}:
+{
   config,
   lib,
   pkgs,
   ...
-}: let
+}:
+let
   moduleName = "mpv";
-in {
-  imports = [];
+in
+{
+  imports = [ ];
 
   options = {
     "${moduleBase}"."${moduleName}" = {
@@ -30,7 +35,7 @@ in {
     };
     programs.yt-dlp = {
       enable = true;
-      settings = {};
+      settings = { };
     };
     services.plex-mpv-shim.enable = true;
   };

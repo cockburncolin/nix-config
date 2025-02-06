@@ -1,11 +1,16 @@
-{moduleBase ? "misc"}: {
+{
+  moduleBase ? "misc",
+}:
+{
   config,
   lib,
   pkgs,
   ...
-}: let
+}:
+let
   moduleName = "hyprland";
-in {
+in
+{
   imports = [
     ./binds.nix
     ./bar.nix
@@ -24,12 +29,12 @@ in {
     # Required to get file picker working in firefox
     xdg.portal = {
       enable = true;
-      extraPortals = [pkgs.xdg-desktop-portal-gtk];
+      extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
     };
 
     wayland.windowManager.hyprland = {
       enable = true;
-      systemd.variables = ["--all"];
+      systemd.variables = [ "--all" ];
       portalPackage = pkgs.xdg-desktop-portal-hyprland;
       settings = {
         general = {

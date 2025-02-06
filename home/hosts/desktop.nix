@@ -5,14 +5,20 @@
   lib,
   inputs,
   ...
+<<<<<<< HEAD:home/hosts/desktop.nix
 }: {
   imports = [../modules/bundle.nix];
+=======
+}:
+{
+  imports = [ ./modules/bundle.nix ];
+>>>>>>> anyrun:home/home.nix
 
   config = {
     home.username = "colin";
     home.homeDirectory = "/home/colin";
 
-    home.file = {};
+    home.file = { };
 
     home.sessionVariables = {
       EDITOR = "codium";
