@@ -32,8 +32,8 @@ in
       gamescopeSession.enable = true;
       protontricks.enable = true;
       remotePlay.openFirewall = true;
-      extraPackages = with pkgs; [gamescope];
-      extraCompatPackages = with pkgs; [proton-ge-bin];
+      extraPackages = with pkgs; [ gamescope ];
+      extraCompatPackages = with pkgs; [ proton-ge-bin ];
     };
   };
 }

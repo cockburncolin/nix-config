@@ -29,7 +29,8 @@ in
       enable = true;
       autoNumlock = true;
       wayland.enable = true;
+      extraPackages = with pkgs; [ where-is-my-sddm-theme ];
+      theme = "where-is-my-sddm-theme";
     };
-
   };
 }
