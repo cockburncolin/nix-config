@@ -1,11 +1,13 @@
 {
+  moduleBase ? "misc",
+}:
+{
   config,
   pkgs,
   lib,
   ...
 }:
 let
-  moduleBase = "editors";
   moduleName = "vscode";
 in
 {

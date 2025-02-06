@@ -1,8 +1,12 @@
 let
-	baseModule = "editors"; 
-in 
+  moduleBase = "editors";
+  argSet = {
+    "moduleBase" = moduleBase;
+  };
+in
 {
-	imports = [ 
-		./vscode.nix
-	];
+  imports = [
+    (import ./obsidian.nix argSet)
+    (import ./vscode.nix argSet)
+  ];
 }

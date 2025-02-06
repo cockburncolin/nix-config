@@ -1,9 +1,9 @@
 # Home manager configuration, enable/disable modules here
 {
   config,
-  pkgs,
   lib,
   inputs,
+  pkgs,
   ...
 }:
 {
@@ -12,7 +12,7 @@
   config = {
     home.username = "colin";
     home.homeDirectory = "/home/colin";
-
+    nixpkgs.config.allowUnfree = true;
     home.file = { };
 
     home.sessionVariables = {
