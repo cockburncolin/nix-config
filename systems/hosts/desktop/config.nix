@@ -8,6 +8,7 @@
 
   config = {
     time.timeZone = "America/Vancouver";
+    hardware.opengl.enable = true;
     networking.hostName = "caeser";
   };
 }
