@@ -14,27 +14,29 @@ in
 {
   imports = [ ];
 
-	config = lib.mkIf config."${moduleBase}"."${moduleName}".enable {
-		programs.neovim = {
-			enable = true;
-			vimAlias = true;
-			viAlias = true;
-		};
-		environment.systemPackages = with pkgs; [
-			efibootmgr
-			git
-			nano
-			tree
-			wget
-		];
+  options = {
+    ${moduleBase}.${moduleName}.enable = lib.mkOption {
+      default = true;
+      description = "enable ${moduleName}";
+      type = lib.types.bool;
+    };
+  };
 
   config = lib.mkIf config."${moduleBase}"."${moduleName}".enable {
+    programs.neovim = {
+      enable = true;
+      vimAlias = true;
+      viAlias = true;
+    };
     environment.systemPackages = with pkgs; [
       efibootmgr
       git
-      wget
+      man-pages
+      man-pages-posix
       nano
+      tree
+      wget
     ];
-
+    documentation.dev.enable = true;
   };
 }

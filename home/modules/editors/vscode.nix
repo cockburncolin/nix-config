@@ -26,8 +26,9 @@ in
       enableExtensionUpdateCheck = true;
       enableUpdateCheck = false;
       extensions = with pkgs.vscode-extensions; [
-        vscodevim.vim
+	arrterian.nix-env-selector
         jnoortheen.nix-ide
+        vscodevim.vim
       ];
       userSettings = {
         "telemetry.enableTelemetry" = false;
