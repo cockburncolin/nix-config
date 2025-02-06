@@ -27,7 +27,7 @@ in
       mutableExtensionsDir = false;
       enableUpdateCheck = false;
       extensions = with pkgs.vscode-extensions; [
-	      arrterian.nix-env-selector
+        arrterian.nix-env-selector
         jnoortheen.nix-ide
         vscodevim.vim
       ];
@@ -41,6 +41,7 @@ in
         "editor.minimap.enabled" = false;
         "git.autofetch" = true;
         "git.confirmSync" = false;
+        "nix.formatterPath" = "nixfmt";
       };
     };
     # other dependancies
