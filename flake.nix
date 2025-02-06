@@ -19,49 +19,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-<<<<<<< HEAD
-  outputs = {
-    self,
-    alejandra,
-    anyrun,
-    home-manager,
-    nixpkgs,
-    firefox-addons,
-    ...
-  } @ inputs: let
-    # Default arch
-    system = "x86_64-linux";
-    pkgs = nixpkgs.legacyPackages.${system};
-    firefox-adds = firefox-addons.packages.${system};
-  in {
-    nixosConfigurations = {
-      desktop = nixpkgs.lib.nixosSystem {
-        specialArgs = {inherit inputs;};
-        modules = [./systems/hosts/desktop/config.nix];
-      };
-
-      laptop = nixpkgs.lib.nixosSystem {
-        specialArgs = {inherit inputs;};
-        modules = [./systems/hosts/laptop/config.nix];
-      };
-    };
-
-    homeConfigurations.desktop = home-manager.lib.homeManagerConfiguration {
-      inherit pkgs;
-      extraSpecialArgs = {inherit firefox-adds;};
-      modules = [./home/hosts/desktop.nix];
-    };
-
-    homeConfigurations.laptop = home-manager.lib.homeManagerConfiguration {
-      inherit pkgs;
-      extraSpecialArgs = {inherit firefox-adds;};
-      modules = [./home/hosts/laptop.nix];
-=======
-    stylix = {
-      url = "github:danth/stylix";
-      inputs.nixpkgs.follows = "nixpkgs";
->>>>>>> anyrun
-    };
   };
 
   outputs =
@@ -71,7 +28,6 @@
       firefox-addons,
       home-manager,
       nixpkgs,
-      stylix,
       ...
     }@inputs:
     let
@@ -99,7 +55,7 @@
         extraSpecialArgs = { inherit anyrun-pkgs firefox-adds; };
         modules = [
           anyrun-hm
-          ./home/home.nix
+          ./home/hosts/desktop.nix
         ];
       };
     };

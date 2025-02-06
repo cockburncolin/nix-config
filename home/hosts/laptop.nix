@@ -5,8 +5,9 @@
   lib,
   inputs,
   ...
-}: {
-  imports = [../modules/bundle.nix];
+}:
+{
+  imports = [ ../modules/bundle.nix ];
 
   config = {
     home.username = "colin";
@@ -14,7 +15,7 @@
 
     bar.battery.enable = true;
 
-    home.file = {};
+    home.file = { };
 
     home.sessionVariables = {
       EDITOR = "codium";
