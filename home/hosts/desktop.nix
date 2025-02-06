@@ -12,7 +12,7 @@
     home.username = "colin";
     home.homeDirectory = "/home/colin";
 
-    home.file = {};
+    home.file = { };
 
     home.sessionVariables = {
       EDITOR = "codium";

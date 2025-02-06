@@ -1,4 +1,9 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 {
 	options = {
 		bar.battery.enable = lib.mkOption {
@@ -20,22 +25,22 @@
 					modules-left = [ "hyprland/workspaces" ];
 					modules-right = if config.bar.battery.enable then [ "pulseaudio" "tray" "battery" "clock" ]	else [ "pulseaudio" "tray" "clock" ];
 
-					# module config
-					clock = {
-						format = "{:%a %b %d %Y - %R %Z}";
-					};
+          # module config
+          clock = {
+            format = "{:%a %b %d %Y - %R %Z}";
+          };
 
-					pulseaudio = {
-						format = "{desc} {volume}%";
-						on-click = "pavucontrol";
-					};
-					
-					tray = {
-						spacing = 10;
-					};
-				};
+          pulseaudio = {
+            format = "{desc} {volume}%";
+            on-click = "pavucontrol";
+          };
 
-			};
-		};
-	};
+          tray = {
+            spacing = 10;
+          };
+        };
+
+      };
+    };
+  };
 }

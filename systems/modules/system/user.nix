@@ -1,12 +1,17 @@
-{moduleBase ? "misc"}: {
+{
+  moduleBase ? "misc",
+}:
+{
   lib,
   config,
   pkgs,
   inputs,
   ...
-}: let
+}:
+let
   moduleName = "makeUser";
-in {
+in
+{
   options = {
     "${moduleBase}"."${moduleName}" = {
       enable = lib.mkOption {
@@ -29,7 +34,10 @@ in {
       isNormalUser = true;
       hashedPassword = "$y$j9T$P0yrCluAkpRNQHuYv6qSW/$7m8zz7hzt4nm70591yJ2uB6Il05k6uRGu9R1kfFq092";
       description = "Colin Cockburn";
-      extraGroups = ["networkmanager" "wheel"];
+      extraGroups = [
+        "networkmanager"
+        "wheel"
+      ];
       shell = pkgs.zsh;
     };
   };

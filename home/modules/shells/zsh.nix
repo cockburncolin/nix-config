@@ -39,11 +39,11 @@ in {
       };
 
       shellAliases = {
-        hms = "home-manager switch --flake ~nix#desktop";
+        hms = "home-manager switch --flake $HOME/.config/nix#desktop";
       };
 
       dirHashes = {
-        nix = "$HOME/.config/nix-new";
+        nix = "$HOME/.config/nix";
       };
     };
   };

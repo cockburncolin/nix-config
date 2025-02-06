@@ -1,12 +1,17 @@
-{moduleBase ? "misc"}: {
+{
+  moduleBase ? "misc",
+}:
+{
   config,
   pkgs,
   lib,
   ...
-}: let
+}:
+let
   moduleName = "kitty";
-in {
-  imports = [];
+in
+{
+  imports = [ ];
 
   options = {
     ${moduleBase}.${moduleName}.enable = lib.mkOption {

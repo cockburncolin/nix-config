@@ -3,11 +3,13 @@
   pkgs,
   lib,
   ...
-}: let
+}:
+let
   moduleBase = "editors";
   moduleName = "vscode";
-in {
-  imports = [];
+in
+{
+  imports = [ ];
 
   options = {
     ${moduleBase}.${moduleName}.enable = lib.mkOption {
@@ -24,9 +26,8 @@ in {
       enableExtensionUpdateCheck = true;
       enableUpdateCheck = false;
       extensions = with pkgs.vscode-extensions; [
-        bbenoist.nix
         vscodevim.vim
-        kamadorueda.alejandra
+        jnoortheen.nix-ide
       ];
       userSettings = {
         "telemetry.enableTelemetry" = false;
@@ -40,5 +41,7 @@ in {
         "git.confirmSync" = false;
       };
     };
+    # other dependancies
+    home.packages = with pkgs; [ nixfmt-rfc-style ];
   };
 }

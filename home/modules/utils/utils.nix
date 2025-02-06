@@ -1,12 +1,12 @@
 { ... }:
 let
-  moduleBase = "git";
+  moduleBase = "utils";
   argSet = {
     "moduleBase" = moduleBase;
   };
 in
 {
   imports = [
-    (import ./gitConfig.nix argSet)
+    (import ./anyrun.nix argSet)
   ];
 }
