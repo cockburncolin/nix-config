@@ -1,0 +1,8 @@
+# My Nix Configuration
+Contains my Nix system and user configurations for home manager in the same flake.
+
+System configurations can be accessed by running `nixos-rebuild switch --flake [path to flake]#[name of configuration]`, and home manager configurations can be run with `home-manager switch --flake [path to flake]#[username]`.
+
+# TODO
+* Create a script to allow easier configuration switching based on hastname for different machines, which can then be aliased.
+* Continue tweaking application configurations.
