@@ -47,6 +47,7 @@ in
           "$mod, C,  killactive"
           "$mod, M,  fullscreen, 1"
           "$mod, T,  togglefloating, "
+          "$mod, SPACE, exec, anyrun"
 
           # misc
           ## Disable gaps
