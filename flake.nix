@@ -18,7 +18,10 @@
       url = "gitlab:rycee/nur-expressions?dir=pkgs/firefox-addons";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-
+    stylix = {
+      url = "github:danth/stylix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =
@@ -28,6 +31,7 @@
       firefox-addons,
       home-manager,
       nixpkgs,
+      stylix,
       ...
     }@inputs:
     let
@@ -41,12 +45,18 @@
       nixosConfigurations = {
         desktop = nixpkgs.lib.nixosSystem {
           specialArgs = { inherit inputs; };
-          modules = [ ./systems/hosts/desktop/config.nix ];
+          modules = [
+            ./systems/hosts/desktop/config.nix
+            stylix.nixosModules.stylix
+          ];
         };
 
         laptop = nixpkgs.lib.nixosSystem {
           specialArgs = { inherit inputs; };
-          modules = [ ./systems/hosts/laptop/config.nix ];
+          modules = [
+            ./systems/hosts/laptop/config.nix
+            stylix.nixosModules.stylix
+          ];
         };
       };
 
@@ -55,6 +65,7 @@
         extraSpecialArgs = { inherit anyrun-pkgs firefox-adds; };
         modules = [
           anyrun-hm
+          stylix.homeManagerModules.stylix
           ./home/hosts/desktop.nix
         ];
       };

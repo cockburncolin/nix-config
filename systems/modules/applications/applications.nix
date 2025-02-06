@@ -7,9 +7,10 @@ let
 in
 {
   imports = [
-    (import ./systemApps.nix argSet)
     (import ./pkgConf.nix argSet)
     (import ./sound.nix argSet)
+    (import ./stylix.nix argSet)
+    (import ./systemApps.nix argSet)
     ./displayManagers/displayManagers.nix
     ./windowManagers/windowManagers.nix
   ];

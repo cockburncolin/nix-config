@@ -12,6 +12,7 @@ let
   moduleName = "makeUser";
 in
 {
+  imports = [];
   options = {
     "${moduleBase}"."${moduleName}" = {
       enable = lib.mkOption {

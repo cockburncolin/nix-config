@@ -24,9 +24,10 @@ in
       enable = true;
       package = pkgs.vscodium;
       enableExtensionUpdateCheck = true;
+      mutableExtensionsDir = false;
       enableUpdateCheck = false;
       extensions = with pkgs.vscode-extensions; [
-	arrterian.nix-env-selector
+	      arrterian.nix-env-selector
         jnoortheen.nix-ide
         vscodevim.vim
       ];
