@@ -8,5 +8,6 @@ in
 {
   imports = [
     (import ./gitConfig.nix argSet)
+    (import ./lazyGit.nix argSet)
   ];
 }
