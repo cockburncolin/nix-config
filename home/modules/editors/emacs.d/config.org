@@ -1,0 +1,264 @@
+#+TITLE: Colin's Emacs Configuration
+#+AUTHOR: Colin Cockburn
+#+DESCRIPTION: My Emacs configuration, inspired by DistroTube's configuration & Doom Emacs
+#+STARTUP: showeverything
+#+OPTIONS: toc:2
+
+* Table Of Contents :toc:
+- [[#important-packages][Important Packages]]
+  - [[#straightel][Straight.el]]
+  - [[#evil-mode][Evil Mode]]
+  - [[#which-key][Which Key]]
+  - [[#general-keybinds][General Keybinds]]
+- [[#modes][Modes]]
+  - [[#nix-mode][Nix Mode]]
+  - [[#electric-operator][Electric-Operator]]
+- [[#themeing][Themeing]]
+  - [[#color-scheme][Color Scheme]]
+  - [[#fonts][Fonts]]
+- [[#emacs-ui][Emacs UI]]
+  - [[#dashboard][Dashboard]]
+- [[#editor-config][Editor Config]]
+  - [[#indentation-guides][Indentation Guides]]
+  - [[#sudo-edit][Sudo Edit]]
+  - [[#zooming-inout][Zooming In/Out]]
+- [[#org-mode-config][Org-Mode Config]]
+  - [[#bullets][Bullets]]
+  - [[#indentation][Indentation]]
+  - [[#table-of-contents][Table of Contents]]
+  - [[#tempo-config][Tempo config]]
+
+* Important Packages
+Please note that the order in this section is important, Ex if Straight isn't first some packages might not get installed.
+** Straight.el
+Straight is my preffered package manager, it is configured to add :straight t by default.
+#+begin_src emacs-lisp
+  ;; Install Straight
+  (defvar bootstrap-version)
+  (let ((bootstrap-file
+         (expand-file-name
+          "straight/repos/straight.el/bootstrap.el"
+          (or (bound-and-true-p straight-base-dir)
+              user-emacs-directory)))
+        (bootstrap-version 7))
+    (unless (file-exists-p bootstrap-file)
+      (with-current-buffer
+          (url-retrieve-synchronously
+           "https://raw.githubusercontent.com/radian-software/straight.el/develop/install.el"
+           'silent 'inhibit-cookies)
+        (goto-char (point-max))
+        (eval-print-last-sexp)))
+    (load bootstrap-file nil 'nomessage))
+
+  ;; Install use-package
+  (straight-use-package 'use-package)
+
+  ;; Set straight by default
+  (setq straight-use-package-by-default t)
+#+end_src
+
+** Evil Mode
+#+begin_src emacs-lisp
+  (use-package evil
+    :init
+    (setq evil-want-keybinding nil)
+    (setq evil-vsplit-window-right t)
+    (setq evil-split-window-below t)
+      :config
+          (evil-mode 1)
+          (use-package evil-collection
+
+            :config
+            (evil-collection-init)))
+#+end_src
+
+** Which Key
+#+begin_src emacs-lisp
+  (use-package which-key
+    :init
+      (which-key-mode 1)
+    :config
+    (setq which-key-side-window-location 'bottom
+            which-key-sort-order #'which-key-key-order-alpha
+            which-key-sort-uppercase-first nil
+            which-key-add-column-padding 1
+            which-key-max-display-columns nil
+            which-key-min-display-lines 6
+            which-key-side-window-slot -10
+            which-key-side-window-max-height 0.25
+            which-key-idle-delay 0.8
+            which-key-max-description-length 25
+            which-key-allow-imprecise-window-fit t
+            which-key-separator " → " ))
+#+end_src
+** General Keybinds
+#+begin_src emacs-lisp
+  (use-package general
+    :config
+    (general-evil-setup)
+    ;; set up 'SPC' as the global leader key
+    (general-create-definer leader-keys
+      :states '(normal insert visual emacs)
+      :keymaps 'override
+      :prefix "SPC" ;; set leader
+      :global-prefix "M-SPC") ;; access leader in insert mode
+
+    (leader-keys
+      "."       '(find-file :wk "Find file")
+      "f c"     '((lambda () (interactive) (find-file "~/.config/nix/home/modules/editors/emacs.d/config.org")) :wk "Edit emacs config")
+      "TAB TAB" '(comment-line :wk "Comment lines"))
+
+    (leader-keys
+      "b"   '(:ignore t :wk "Buffer")
+      "b b" '(switch-to-buffer :wk "Switch buffer")
+      "b i" '(ibuffer :wk "Ibuffer")
+      "b k" '(kill-this-buffer :wk "Kill this buffer")
+      "b n" '(next-buffer :wk "Next buffer")
+      "b p" '(previous-buffer :wk "Previous buffer")
+      "b r" '(revert-buffer :wk "Reload buffer"))
+
+    (leader-keys
+      "e"   '(:ignore t :wk "Evaluate")    
+      "e b" '(eval-buffer :wk "Evaluate elisp in buffer")
+      "e d" '(eval-defun :wk "Evaluate defun containing or after point")
+      "e e" '(eval-expression :wk "Evaluate and elisp expression")
+      "e l" '(eval-last-sexp :wk "Evaluate elisp expression before point")
+      "e r" '(eval-region :wk "Evaluate elisp in region")) 
+
+     (leader-keys
+      "h"     '(:ignore t :wk "Help")
+      "h f"   '(describe-function :wk "Describe function")
+      "h v"   '(describe-variable :wk "Describe variable"))
+
+     (leader-keys
+      "t" '(:ignore t :wk "Toggle")
+      "t l" '(display-line-numbers-mode :wk "Toggle line numbers")
+      "t t" '(visual-line-mode :wk "Toggle truncated lines"))
+  )
+
+#+end_src
+* Modes
+** Nix Mode
+#+begin_src emacs-lisp
+  (use-package nix-mode
+    :mode "\\.nix\\'")
+#+end_src
+** Electric-Operator
+Adds a minor mode that adds spaces around operators such as +,-,=, etc.
+#+begin_src emacs-lisp
+  (use-package electric-operator
+    :config
+    (add-hook 'nix-mode-hook #'electric-operator-mode))
+#+end_src
+
+* Themeing
+** Color Scheme
+#+begin_src emacs-lisp
+  ;; Use onedark color scheme
+  (use-package base16-theme
+      :config
+  (setq base16-highlight-mode-line t)
+      (load-theme 'base16-onedark t))
+#+end_src
+** Fonts
+#+begin_src emacs-lisp
+  (add-to-list 'default-frame-alist
+    '(font . "Iosevka Nerd Font-12"))
+#+end_src
+
+* Emacs UI
+#+begin_src emacs-lisp
+  ;; UI settings
+  (setq inhibit-startup-message t)
+  (menu-bar-mode -1)
+  (scroll-bar-mode -1)
+  (tool-bar-mode -1)
+  ;; enable line numbers in programming modes only
+  (add-hook 'prog-mode-hook #'display-line-numbers-mode)
+#+end_src
+
+** Dashboard
+#+begin_src emacs-lisp
+      (use-package dashboard
+    :init
+  (setq initial-buffer-choice (lambda () (get-buffer-create dashboard-buffer-name)))
+    (setq dashboard-center-content t)
+  (setq dashboard-vertically-center-content t)
+    :config
+      (dashboard-setup-startup-hook))
+#+end_src
+
+* Editor Config
+** Indentation Guides
+Enables visual indentation markers, options for format are fill, column, character and bitmap
+#+begin_src emacs-lisp
+    (use-package highlight-indent-guides
+  :init
+  (setq highlight-indent-guides-method 'bitmap)
+  :config
+    (add-hook 'prog-mode-hook 'highlight-indent-guides-mode))
+#+end_src
+
+** Sudo Edit
+[[https://github.com/nflath/sudo-edit][sudo-edit]] gives us the ability to open files with sudo privileges or switch over to editing with sudo privileges if we initially opened the file without such privileges.
+
+#+begin_src emacs-lisp
+  (use-package sudo-edit
+    :config
+      (leader-keys
+        "fu" '(sudo-edit-find-file :wk "Sudo find file")
+        "fU" '(sudo-edit :wk "Sudo edit file")))
+#+end_src
+
+** Zooming In/Out
+You can use the bindings CTRL plus =/- for zooming in/out.  You can also use CTRL plus the mouse wheel for zooming in/out.
+
+#+begin_src emacs-lisp
+  (global-set-key (kbd "C-=") 'text-scale-increase)
+  (global-set-key (kbd "C--") 'text-scale-decrease)
+  (global-set-key (kbd "<C-wheel-up>") 'text-scale-increase)
+  (global-set-key (kbd "<C-wheel-down>") 'text-scale-decrease)
+#+end_src
+
+* Org-Mode Config
+** Bullets
+Makes Org mode look a bit better
+#+begin_src emacs-lisp
+  (add-hook 'org-mode-hook 'org-indent-mode)
+  (use-package org-bullets
+    :config
+    (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1))))
+#+end_src
+
+** Indentation
+This should make formatting in Org-mode a bit better
+#+begin_src emacs-lisp
+  (setq org-src-tab-acts-natively t)
+#+end_src
+
+** Table of Contents
+#+begin_src emacs-lisp
+  (use-package toc-org
+      :commands toc-org-enable
+      :init (add-hook 'org-mode-hook 'toc-org-enable))
+#+end_src
+** Tempo config
+Org-tempo is not a separate package but a module within org that can be enabled.  Org-tempo allows for '<s' followed by TAB to expand to a begin_src tag.  Other expansions available include:
+
+| Typing the below + TAB | Expands to ...                           |
+|------------------------+------------------------------------------|
+| <a                     | '#+BEGIN_EXPORT ascii' … '#+END_EXPORT  |
+| <c                     | '#+BEGIN_CENTER' … '#+END_CENTER'       |
+| <C                     | '#+BEGIN_COMMENT' … '#+END_COMMENT'     |
+| <e                     | '#+BEGIN_EXAMPLE' … '#+END_EXAMPLE'     |
+| <E                     | '#+BEGIN_EXPORT' … '#+END_EXPORT'       |
+| <h                     | '#+BEGIN_EXPORT html' … '#+END_EXPORT'  |
+| <l                     | '#+BEGIN_EXPORT latex' … '#+END_EXPORT' |
+| <q                     | '#+BEGIN_QUOTE' … '#+END_QUOTE'         |
+| <s                     | '#+BEGIN_SRC' … '#+END_SRC'             |
+| <v                     | '#+BEGIN_VERSE' … '#+END_VERSE'         |
+
+#+begin_src emacs-lisp
+  (require 'org-tempo)
+#+end_src
+

@@ -25,15 +25,17 @@ in
   };
 
   config = lib.mkIf config."${moduleBase}"."${moduleName}".enable {
-    home.file.".emacs.d" = {
-      source = ./emacs.d;
-      recursive = true;
-    };
+   xdg.configFile."emacs" = {
+     source = ./emacs.d;
+     recursive = true;
+     # onChange  = "${config.home.homeDirectory}/.nix-profile/bin/systemctl --user restart emacs"; # use at your own risk, will force emacs to restart, SAVE EVERYTHING BEFORE REBUILDING!
+   };
 
-    services.emacs = {
-    	enable = true;
-	defaultEditor = lib.mkForce true;
-	client.enable = true;
-    };
+   services.emacs = {
+      enable = true;
+     defaultEditor = true;
+     client.enable = true;
+     startWithUserSession = true;
+   };
   };
 }

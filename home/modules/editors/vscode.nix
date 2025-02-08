@@ -15,7 +15,7 @@ in
 
   options = {
     ${moduleBase}.${moduleName}.enable = lib.mkOption {
-      default = false;
+      default = true;
       description = "enable ${moduleName}";
       type = lib.types.bool;
     };
