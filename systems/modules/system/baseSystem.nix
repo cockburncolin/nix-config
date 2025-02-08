@@ -27,6 +27,11 @@ in
   config = lib.mkIf config."${moduleBase}"."${moduleName}".enable {
     security.pam.services.hyprlock = { };
 
+    fonts.packages = with pkgs.nerd-fonts; [
+      symbols-only
+      iosevka
+      noto
+    ];
     nix = {
       settings.experimental-features = [
         "nix-command"
