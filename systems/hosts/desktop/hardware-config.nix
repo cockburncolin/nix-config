@@ -51,6 +51,11 @@
     ];
   };
 
+  fileSystems."/mnt/nfs" = {
+   device = "192.168.1.10:/volume2/Media";
+   fsType = "nfs";
+};
+
   swapDevices = [
     { device = "/dev/disk/by-uuid/a2911656-03a8-457c-91fa-2674d276fdea"; }
   ];

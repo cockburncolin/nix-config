@@ -58,6 +58,9 @@ in
         package = pkgs.bibata-cursors;
         size = 22;
       };
+      targets = {
+      	emacs.enable = true;
+	};
     };
   };
 }
