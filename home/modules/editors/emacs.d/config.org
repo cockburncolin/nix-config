@@ -10,16 +10,17 @@
   - [[#evil-mode][Evil Mode]]
   - [[#which-key][Which Key]]
   - [[#general-keybinds][General Keybinds]]
-- [[#modes][Modes]]
-  - [[#nix-mode][Nix Mode]]
   - [[#electric-operator][Electric-Operator]]
+- [[#languagesmajor-modes][Languages/Major Modes]]
+  - [[#nix-mode][Nix Mode]]
+- [[#emacs-ui][Emacs UI]]
+  - [[#dashboard][Dashboard]]
 - [[#themeing][Themeing]]
   - [[#color-scheme][Color Scheme]]
   - [[#fonts][Fonts]]
-- [[#emacs-ui][Emacs UI]]
-  - [[#dashboard][Dashboard]]
 - [[#editor-config][Editor Config]]
   - [[#indentation-guides][Indentation Guides]]
+  - [[#modeline][Modeline]]
   - [[#sudo-edit][Sudo Edit]]
   - [[#zooming-inout][Zooming In/Out]]
 - [[#org-mode-config][Org-Mode Config]]
@@ -27,6 +28,8 @@
   - [[#indentation][Indentation]]
   - [[#table-of-contents][Table of Contents]]
   - [[#tempo-config][Tempo config]]
+- [[#utilities][Utilities]]
+  - [[#vterm][Vterm]]
 
 * Important Packages
 Please note that the order in this section is important, Ex if Straight isn't first some packages might not get installed.
@@ -62,12 +65,9 @@ Straight is my preffered package manager, it is configured to add :straight t by
   (use-package evil
     :init
     (setq evil-want-keybinding nil)
-    (setq evil-vsplit-window-right t)
-    (setq evil-split-window-below t)
       :config
           (evil-mode 1)
           (use-package evil-collection
-
             :config
             (evil-collection-init)))
 #+end_src
@@ -134,38 +134,30 @@ Straight is my preffered package manager, it is configured to add :straight t by
       "t" '(:ignore t :wk "Toggle")
       "t l" '(display-line-numbers-mode :wk "Toggle line numbers")
       "t t" '(visual-line-mode :wk "Toggle truncated lines"))
+     (leader-keys
+       "o" '(:ignore t :wk "Org-Mode")
+       "o e" '(org-edit-special :wk "Edit source block")
+       "o E" '(org-edit-src-exit :wk "Exit source block"))
   )
 
-#+end_src
-* Modes
-** Nix Mode
-#+begin_src emacs-lisp
-  (use-package nix-mode
-    :mode "\\.nix\\'")
 #+end_src
 ** Electric-Operator
 Adds a minor mode that adds spaces around operators such as +,-,=, etc.
 #+begin_src emacs-lisp
-  (use-package electric-operator
+  (use-package electric-operator)
+#+end_src
+
+* Languages/Major Modes
+** Nix Mode
+#+begin_src emacs-lisp
+  (use-package nix-mode
+    :mode "\\.nix\\'"
     :config
-    (add-hook 'nix-mode-hook #'electric-operator-mode))
-#+end_src
-
-* Themeing
-** Color Scheme
-#+begin_src emacs-lisp
-  ;; Use onedark color scheme
-  (use-package base16-theme
+    (use-package nixfmt
       :config
-  (setq base16-highlight-mode-line t)
-      (load-theme 'base16-onedark t))
+      (add-hook 'nix-mode-hook 'nixfmt-on-save-mode)
+      (add-hook 'nix-mode-hook 'electric-operator-mode)))
 #+end_src
-** Fonts
-#+begin_src emacs-lisp
-  (add-to-list 'default-frame-alist
-    '(font . "Iosevka Nerd Font-12"))
-#+end_src
-
 * Emacs UI
 #+begin_src emacs-lisp
   ;; UI settings
@@ -179,26 +171,45 @@ Adds a minor mode that adds spaces around operators such as +,-,=, etc.
 
 ** Dashboard
 #+begin_src emacs-lisp
-      (use-package dashboard
+  (use-package dashboard
     :init
-  (setq initial-buffer-choice (lambda () (get-buffer-create dashboard-buffer-name)))
+    (setq initial-buffer-choice (lambda () (get-buffer-create dashboard-buffer-name)))
     (setq dashboard-center-content t)
-  (setq dashboard-vertically-center-content t)
+    (setq dashboard-vertically-center-content t)
     :config
       (dashboard-setup-startup-hook))
+#+end_src
+
+* Themeing
+** Color Scheme
+#+begin_src emacs-lisp
+  ;; Use onedark color scheme
+  (use-package base16-theme
+      :config
+      (setq base16-highlight-mode-line t)
+      (load-theme 'base16-onedark t))
+#+end_src
+** Fonts
+#+begin_src emacs-lisp
+  (add-to-list 'default-frame-alist
+    '(font . "Iosevka Nerd Font-12"))
 #+end_src
 
 * Editor Config
 ** Indentation Guides
 Enables visual indentation markers, options for format are fill, column, character and bitmap
 #+begin_src emacs-lisp
-    (use-package highlight-indent-guides
-  :init
-  (setq highlight-indent-guides-method 'bitmap)
-  :config
-    (add-hook 'prog-mode-hook 'highlight-indent-guides-mode))
+  (use-package highlight-indent-guides
+   :init
+   (setq highlight-indent-guides-method 'bitmap)
+   :config
+     (add-hook 'prog-mode-hook 'highlight-indent-guides-mode))
 #+end_src
-
+** Modeline
+#+begin_src emacs-lisp
+  (use-package simple-modeline
+  :hook (after-init . simple-modeline-mode))
+#+end_src
 ** Sudo Edit
 [[https://github.com/nflath/sudo-edit][sudo-edit]] gives us the ability to open files with sudo privileges or switch over to editing with sudo privileges if we initially opened the file without such privileges.
 
@@ -206,8 +217,8 @@ Enables visual indentation markers, options for format are fill, column, charact
   (use-package sudo-edit
     :config
       (leader-keys
-        "fu" '(sudo-edit-find-file :wk "Sudo find file")
-        "fU" '(sudo-edit :wk "Sudo edit file")))
+        "f u" '(sudo-edit-find-file :wk "Sudo find file")
+        "f U" '(sudo-edit :wk "Sudo edit file")))
 #+end_src
 
 ** Zooming In/Out
@@ -242,6 +253,7 @@ This should make formatting in Org-mode a bit better
       :commands toc-org-enable
       :init (add-hook 'org-mode-hook 'toc-org-enable))
 #+end_src
+
 ** Tempo config
 Org-tempo is not a separate package but a module within org that can be enabled.  Org-tempo allows for '<s' followed by TAB to expand to a begin_src tag.  Other expansions available include:
 
@@ -262,3 +274,9 @@ Org-tempo is not a separate package but a module within org that can be enabled.
   (require 'org-tempo)
 #+end_src
 
+* Utilities
+** Vterm
+Vterm provides a terminal to use in emacs, requires cmake to build.
+#+begin_src emacs-lisp
+  (use-package vterm)
+#+end_src
