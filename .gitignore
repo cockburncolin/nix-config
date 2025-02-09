@@ -1,2 +1,7 @@
 result
 *~
+auto-save-list/
+straight/
+eln-cache/
+recentf
+config.el

@@ -10,6 +10,7 @@
 }:
 let
   moduleName = "emacs";
+  emacsDir = config.lib.file.mkOutOfStoreSymlink "/home/colin/.config/nix/home/modules/editors/emacs.d";
 in
 {
   imports = [ ];
@@ -25,17 +26,14 @@ in
   };
 
   config = lib.mkIf config."${moduleBase}"."${moduleName}".enable {
-   xdg.configFile."emacs" = {
-     source = ./emacs.d;
-     recursive = true;
-     # onChange  = "${config.home.homeDirectory}/.nix-profile/bin/systemctl --user restart emacs"; # use at your own risk, will force emacs to restart, SAVE EVERYTHING BEFORE REBUILDING!
-   };
-
-   services.emacs = {
+    xdg.configFile."emacs" = {
+      source = emacsDir;
+    };
+    services.emacs = {
       enable = true;
-     defaultEditor = true;
-     client.enable = true;
-     startWithUserSession = true;
+      defaultEditor = true;
+      client.enable = true;
+      startWithUserSession = true;
    };
   };
 }

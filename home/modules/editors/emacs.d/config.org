@@ -105,7 +105,7 @@ Straight is my preffered package manager, it is configured to add :straight t by
 
     (leader-keys
       "."       '(find-file :wk "Find file")
-      "f c"     '((lambda () (interactive) (find-file "~/.config/nix/home/modules/editors/emacs.d/config.org")) :wk "Edit emacs config")
+      "f c"     '((lambda () (interactive) (find-file "~/.config/emacs/config.org")) :wk "Edit emacs config")
       "TAB TAB" '(comment-line :wk "Comment lines"))
 
     (leader-keys
