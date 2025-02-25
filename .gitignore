@@ -1,7 +1,8 @@
 result
 *~
+.cache/
 auto-save-list/
-straight/
+config.el
 eln-cache/
 recentf
-config.el
+straight/
