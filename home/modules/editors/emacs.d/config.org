@@ -13,6 +13,7 @@
 - [[#languagesmajor-modes][Languages/Major Modes]]
   - [[#json-mode][Json Mode]]
   - [[#nix-mode][Nix Mode]]
+  - [[#elisp][ELisp]]
 - [[#emacs-ui][Emacs UI]]
   - [[#general-ui-tweaks][General UI Tweaks]]
   - [[#dashboard][Dashboard]]
@@ -162,7 +163,13 @@ Straight is my preffered package manager, it is configured to add :straight t by
       :config
       (add-hook 'nix-mode-hook 'nixfmt-on-save-mode)))
 #+end_src
-
+** ELisp
+Add in a formator for ELisp
+#+begin_src emacs-lisp
+  (use-package elisp-autofmt
+    :config
+    (add-hook 'elisp-mode-hook 'elisp-autofmt-mode))
+#+end_src
 * Emacs UI
 ** General UI Tweaks
 #+begin_src emacs-lisp

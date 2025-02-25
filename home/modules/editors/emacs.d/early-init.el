@@ -183,15 +183,8 @@
 (setq use-file-dialog nil)
 (setq use-dialog-box nil)
 
-;; Allow for shorter responses: "y" for yes and "n" for no.
-(if (boundp 'use-short-answers)
-    (setq use-short-answers t)
-  (advice-add #'yes-or-no-p :override #'y-or-n-p))
-(defalias #'view-hello-file #'ignore)  ; Never show the hello file
-
 ;;; And that's mine
 
-(setq package-enable-at-startup nil)
 (setenv "LSP_USE_PLISTS" "true")
 (setq-default pgtk-wait-for-event-timeout 0)
 (setq vc-follow-symlinks t)

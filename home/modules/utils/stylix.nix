@@ -22,8 +22,15 @@ in
         description = "enable ${moduleName}";
         type = lib.types.bool;
       };
+
+      theme = lib.mkOption {
+        default = "grayscale-dark";
+        description = "base 16 theme to use";
+        type = lib.types.str;
+      };
+
       wallpaper = lib.mkOption {
-        default = "castle.png";
+        default = "mountains.png";
         description = "filename to choose from resources/wallpapers folder";
         type = lib.types.str;
       };
@@ -52,7 +59,9 @@ in
       # images and themes must be set here as well as system wide inheritance doesn't seem to carry
       # both over
       image = ../../../resources/wallpapers/${config.${moduleBase}.${moduleName}.wallpaper};
-      base16Scheme = "${pkgs.base16-schemes}/share/themes/onedark.yaml";
+      base16Scheme = "${pkgs.base16-schemes}/share/themes/${
+        config.${moduleBase}.${moduleName}.theme
+      }.yaml";
       cursor = {
         name = "Bibata-Modern-Ice";
         package = pkgs.bibata-cursors;
@@ -61,6 +70,7 @@ in
 
       targets = {
         waybar.enable = false;
+        firefox.profileNames = [ "default" ];
       };
     };
   };
