@@ -11,8 +11,9 @@ in
     (import ./sound.nix argSet)
     (import ./stylix.nix argSet)
     (import ./systemApps.nix argSet)
-    ./games/games.nix
+    (import ./vms.nix argSet)
     ./displayManagers/displayManagers.nix
+    ./games/games.nix
     ./windowManagers/windowManagers.nix
   ];
 }

@@ -10,15 +10,15 @@
 }:
 
 {
-  imports = [
-    (modulesPath + "/installer/scan/not-detected.nix")
-  ];
+  imports = [ (modulesPath + "/installer/scan/not-detected.nix") ];
 
   boot.initrd.availableKernelModules = [
     "nvme"
     "xhci_pci"
     "ahci"
     "usbhid"
+    "usb_storage"
+    "sd_mod"
   ];
   boot.initrd.kernelModules = [ ];
   boot.kernelModules = [ "kvm-amd" ];
@@ -52,9 +52,22 @@
   };
 
   fileSystems."/mnt/nfs" = {
-   device = "192.168.1.10:/volume2/Media";
-   fsType = "nfs";
-};
+    device = "192.168.1.10:/volume2/Media";
+    fsType = "nfs4";
+  };
+
+  # Kobo
+  fileSystems."/mnt/ereader" = {
+    device = "/dev/disk/by-uuid/63F3-BC98";
+    fsType = "vfat";
+    options = [
+      "noauto"
+      "uid=colin"
+      "gid=users"
+      "fmask=0022"
+      "dmask=0022"
+    ];
+  };
 
   swapDevices = [
     { device = "/dev/disk/by-uuid/a2911656-03a8-457c-91fa-2674d276fdea"; }

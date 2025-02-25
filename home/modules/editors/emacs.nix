@@ -29,18 +29,18 @@ in
     xdg.configFile."emacs" = {
       source = emacsDir;
     };
+
+    programs.emacs = {
+	enable = true;
+	package = pkgs.emacs-gtk;
+    };
+
     # Required for vterm
     home.packages = with pkgs; [
       cmake
-      gnumake
       gcc
+      gnumake
       libtool
     ];
-    services.emacs = {
-      enable = true;
-      defaultEditor = true;
-      client.enable = true;
-      startWithUserSession = true;
-    };
   };
 }

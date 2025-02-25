@@ -10,16 +10,16 @@
   - [[#evil-mode][Evil Mode]]
   - [[#which-key][Which Key]]
   - [[#general-keybinds][General Keybinds]]
-  - [[#electric-operator][Electric-Operator]]
 - [[#languagesmajor-modes][Languages/Major Modes]]
+  - [[#json-mode][Json Mode]]
   - [[#nix-mode][Nix Mode]]
 - [[#emacs-ui][Emacs UI]]
+  - [[#general-ui-tweaks][General UI Tweaks]]
   - [[#dashboard][Dashboard]]
-- [[#themeing][Themeing]]
-  - [[#color-scheme][Color Scheme]]
-  - [[#fonts][Fonts]]
+  - [[#themeing][Themeing]]
 - [[#editor-config][Editor Config]]
   - [[#indentation-guides][Indentation Guides]]
+  - [[#golden-ratio][Golden Ratio]]
   - [[#modeline][Modeline]]
   - [[#sudo-edit][Sudo Edit]]
   - [[#zooming-inout][Zooming In/Out]]
@@ -29,7 +29,10 @@
   - [[#table-of-contents][Table of Contents]]
   - [[#tempo-config][Tempo config]]
 - [[#utilities][Utilities]]
+  - [[#treemacs][Treemacs]]
+  - [[#magit][Magit]]
   - [[#vterm][Vterm]]
+  - [[#popper][Popper]]
 
 * Important Packages
 Please note that the order in this section is important, Ex if Straight isn't first some packages might not get installed.
@@ -108,6 +111,7 @@ Straight is my preffered package manager, it is configured to add :straight t by
       "f c"     '((lambda () (interactive) (find-file "~/.config/emacs/config.org")) :wk "Edit emacs config")
       "TAB TAB" '(comment-line :wk "Comment lines"))
 
+    ;; General keybinds
     (leader-keys
       "b"   '(:ignore t :wk "Buffer")
       "b b" '(switch-to-buffer :wk "Switch buffer")
@@ -134,6 +138,7 @@ Straight is my preffered package manager, it is configured to add :straight t by
       "t" '(:ignore t :wk "Toggle")
       "t l" '(display-line-numbers-mode :wk "Toggle line numbers")
       "t t" '(visual-line-mode :wk "Toggle truncated lines"))
+
      (leader-keys
        "o" '(:ignore t :wk "Org-Mode")
        "o e" '(org-edit-special :wk "Edit source block")
@@ -141,13 +146,13 @@ Straight is my preffered package manager, it is configured to add :straight t by
   )
 
 #+end_src
-** Electric-Operator
-Adds a minor mode that adds spaces around operators such as +,-,=, etc.
-#+begin_src emacs-lisp
-  (use-package electric-operator)
-#+end_src
 
 * Languages/Major Modes
+** Json Mode
+#+begin_src emacs-lisp
+  (use-package json-mode
+    :mode "\\.json\\'")
+#+end_src
 ** Nix Mode
 #+begin_src emacs-lisp
   (use-package nix-mode
@@ -155,10 +160,11 @@ Adds a minor mode that adds spaces around operators such as +,-,=, etc.
     :config
     (use-package nixfmt
       :config
-      (add-hook 'nix-mode-hook 'nixfmt-on-save-mode)
-      (add-hook 'nix-mode-hook 'electric-operator-mode)))
+      (add-hook 'nix-mode-hook 'nixfmt-on-save-mode)))
 #+end_src
+
 * Emacs UI
+** General UI Tweaks
 #+begin_src emacs-lisp
   ;; UI settings
   (setq inhibit-startup-message t)
@@ -180,20 +186,8 @@ Adds a minor mode that adds spaces around operators such as +,-,=, etc.
       (dashboard-setup-startup-hook))
 #+end_src
 
-* Themeing
-** Color Scheme
-#+begin_src emacs-lisp
-  ;; Use onedark color scheme
-  (use-package base16-theme
-      :config
-      (setq base16-highlight-mode-line t)
-      (load-theme 'base16-onedark t))
-#+end_src
-** Fonts
-#+begin_src emacs-lisp
-  (add-to-list 'default-frame-alist
-    '(font . "Iosevka Nerd Font-12"))
-#+end_src
+** Themeing
+I use stylix with Nix for all my theming needs, it applies colourschemes automatically so no configuration in Emacs is needed.
 
 * Editor Config
 ** Indentation Guides
@@ -204,6 +198,14 @@ Enables visual indentation markers, options for format are fill, column, charact
    (setq highlight-indent-guides-method 'bitmap)
    :config
      (add-hook 'prog-mode-hook 'highlight-indent-guides-mode))
+#+end_src
+** Golden Ratio
+Automatically resizes windows when editing them
+#+begin_src emacs-lisp
+  (use-package golden-ratio
+    :config
+    (setq golden-ratio-auto-scale t)
+    (golden-ratio-mode 1))
 #+end_src
 ** Modeline
 #+begin_src emacs-lisp
@@ -275,8 +277,50 @@ Org-tempo is not a separate package but a module within org that can be enabled.
 #+end_src
 
 * Utilities
-** Vterm
-Vterm provides a terminal to use in emacs, requires cmake to build.
+** Treemacs
+Treemacs is a file explorer for emacs
 #+begin_src emacs-lisp
-  (use-package vterm)
+  (use-package treemacs
+    :config
+    (leader-keys "t T" '(treemacs :wk "Toggle Treemacs"))
+    (use-package treemacs-evil
+      :after (treemacs evil))
+    (use-package treemacs-nerd-icons)
+    (use-package treemacs-magit)
+  )
+#+end_src
+** Magit
+Magit is a git interface for emacs.
+#+begin_src emacs-lisp
+  (use-package magit)
+#+end_src
+** Vterm
+Vterm provides a terminal to use in emacs, requires cmake & libterm to build.  A lot of Linux distros provide a package for this as well so you don't have to complile it yourself if you don't want to.
+#+begin_src emacs-lisp
+  (use-package vterm
+    :config
+    (setq vterm-kill-buffer-on-exit t
+          vterm-always-compile-module t)
+    (leader-keys "v" '(vterm :wk "Launch VTerm"))
+  )
+#+end_src
+** Popper
+Lets you declare buffers as popup windows and allows you to toggle them with a keybind
+#+begin_src emacs-lisp
+  (use-package popper
+    :config
+    (setq popper-reference-buffers
+        '("\\*Messages\\*"
+          "Output\\*$"
+          "^\\*vterm.*\\*$"  vterm-mode 
+          help-mode
+          compilation-mode))
+    (popper-mode +1)
+    (popper-echo-mode +1)
+    (leader-keys
+      "p"   '(:ignore t :wk "Popper")
+      "p t" '(popper-toggle :wk "Toggle Popper Buffer")
+      "p c" '(popper-cycle  :wk "Cycle Popper Buffer")
+    )
+  )
 #+end_src

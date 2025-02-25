@@ -4,29 +4,42 @@
   ...
 }:
 let
+  editor = "emacsclient -a nvim -c";
+  menu = "anyrun";
   term = "kitty";
-  menu = "wofi --show drun";
-  browser = "firefox";
 in
 {
   config = {
     wayland.windowManager.hyprland.settings = {
       "$mod" = "SUPER";
 
+      binde = [
+        # resize windows
+        "$mod+Alt, Right, resizeactive, 30 0"
+        "$mod+Alt, Left, resizeactive, -30 0"
+        "$mod+Alt, Up, resizeactive, 0 -30"
+        "$mod+Alt, Down, resizeactive, 0 30"
+
+        # audio control
+        ", XF86AudioLowerVolume, exec, pactl get-default-sink | xargs -I def-sink pactl set-sink-volume def-sink -5%"
+        ", XF86AudioRaiseVolume, exec, pactl get-default-sink | xargs -I def-sink pactl set-sink-volume def-sink +5%"
+      ];
+
+      bindm = [
+        "$mod, mouse:272, movewindow"
+        "$mod, mouse:273, resizewindow"
+      ];
+
       bind =
         [
           # applications
-          "$mod, F, exec, ${browser}"
           "$mod+shift, RETURN, exec, ${term}"
+          "$mod, E, exec, ${editor}"
+          "$mod, SPACE, exec, ${menu}"
 
           # audio control
-          # ", F10, exec, $scrPath/volumecontrol.sh -o m"
-          # ", F11, exec, $scrPath/volumecontrol.sh -o d"
-          # ", F12, exec, $scrPath/volumecontrol.sh -o i"
-          # ", XF86AudioMute, exec, $scrPath/volumecontrol.sh -o m"
-          # ", XF86AudioMicMute, exec, $scrPath/volumecontrol.sh -i m"
-          # ", XF86AudioLowerVolume, exec, $scrPath/volumecontrol.sh -o d"
-          # ", XF86AudioRaiseVolume, exec, $scrPath/volumecontrol.sh -o i"
+          ", XF86AudioMute, exec, pactl get-default-sink | xargs -I def-sink pactl set-sink-mute def-sink toggle"
+          ", XF86AudioMicMute, exec, pactl get-default-source | xargs -I def-sink pactl set-source-mute def-sink toggle"
 
           # move/change window focus
           "$mod, Left, movefocus, l"
@@ -38,16 +51,9 @@ in
           "$mod+Shift, Left, layoutmsg, swapprev noloop"
           "$mod+Shift, Right, layoutmsg, swapnext noloop"
 
-          # resize windows
-          "$mod+Alt, Right, resizeactive, 30 0"
-          "$mod+Alt, Left, resizeactive, -30 0"
-          "$mod+Alt, Up, resizeactive, 0 -30"
-          "$mod+Alt, Down, resizeactive, 0 30"
-
           "$mod, C,  killactive"
           "$mod, M,  fullscreen, 1"
           "$mod, T,  togglefloating, "
-          "$mod, SPACE, exec, anyrun"
 
           # misc
           ## Disable gaps

@@ -32,6 +32,7 @@ in
       iosevka
       noto
     ];
+
     nix = {
       settings.experimental-features = [
         "nix-command"

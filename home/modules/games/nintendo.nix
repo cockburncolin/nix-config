@@ -9,7 +9,7 @@
   ...
 }:
 let
-  moduleName = "sound";
+  moduleName = "nintendo";
 in
 {
   imports = [ ];
@@ -25,16 +25,10 @@ in
   };
 
   config = lib.mkIf config."${moduleBase}"."${moduleName}".enable {
-    services.pipewire = {
-      enable = true;
-      alsa.enable = true;
-      alsa.support32Bit = true;
-      pulse.enable = true;
-      jack.enable = true;
-    };
-    environment.systemPackages = with pkgs; [
-      pulseaudio
-      pavucontrol
+    # installs tools for working with Wii(U) games and consoles
+    home.packages = with pkgs; [
+      dolphin-emu
+      wiimms-iso-tools
     ];
   };
 }

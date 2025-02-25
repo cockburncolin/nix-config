@@ -13,7 +13,7 @@ let
   moduleName = "stylix";
 in
 {
-  imports = [];
+  imports = [ ];
 
   options = {
     "${moduleBase}"."${moduleName}" = {
@@ -31,7 +31,7 @@ in
   };
 
   config = lib.mkIf config."${moduleBase}"."${moduleName}".enable {
-    gtk ={
+    gtk = {
       enable = true;
       gtk3.extraConfig = {
         gtk-application-prefer-dark-theme = 1;
@@ -58,9 +58,10 @@ in
         package = pkgs.bibata-cursors;
         size = 22;
       };
+
       targets = {
-      	emacs.enable = true;
-	};
+        waybar.enable = false;
+      };
     };
   };
 }

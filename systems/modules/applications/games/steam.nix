@@ -25,7 +25,7 @@ in
   };
 
   config = lib.mkIf config."${moduleBase}"."${moduleName}".enable {
-    hardware.opengl.enable = true;
+    hardware.graphics.enable = true;
     hardware.steam-hardware.enable = true;
     programs.steam = {
       enable = true;

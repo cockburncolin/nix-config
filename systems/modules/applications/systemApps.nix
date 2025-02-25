@@ -30,10 +30,13 @@ in
     };
     environment.systemPackages = with pkgs; [
       efibootmgr
+      file-rename
+      fuse
       git
       man-pages
       man-pages-posix
       nano
+      p7zip
       tree
       wget
     ];

@@ -8,6 +8,7 @@
 
   config = {
     networking.hostName = "caeser";
+    networking.firewall.checkReversePath = false;
     time.timeZone = "America/Vancouver";
   };
 }

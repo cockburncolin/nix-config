@@ -10,6 +10,7 @@ in
     (import ./anyrun.nix argSet)
     (import ./ranger.nix argSet)
     (import ./stylix.nix argSet)
+    (import ./wine.nix argSet)
     (import ./zathura.nix argSet)
   ];
 }

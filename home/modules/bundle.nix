@@ -2,6 +2,7 @@
   imports = [
     ./browsers/browsers.nix
     ./editors/editors.nix
+    ./games/games.nix
     ./git/git.nix
     ./media/media.nix
     ./shells/shells.nix

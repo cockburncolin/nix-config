@@ -9,7 +9,7 @@
   ...
 }:
 let
-  moduleName = "sound";
+  moduleName = "prismLauncher";
 in
 {
   imports = [ ];
@@ -25,16 +25,19 @@ in
   };
 
   config = lib.mkIf config."${moduleBase}"."${moduleName}".enable {
-    services.pipewire = {
-      enable = true;
-      alsa.enable = true;
-      alsa.support32Bit = true;
-      pulse.enable = true;
-      jack.enable = true;
-    };
-    environment.systemPackages = with pkgs; [
-      pulseaudio
-      pavucontrol
+    home.packages = with pkgs; [
+      (prismlauncher.override {
+        # Add binary required by some mod
+        additionalPrograms = [ ffmpeg ];
+
+        # Change Java runtimes available to Prism Launcher
+        jdks = [
+          graalvm-ce
+          zulu8
+          zulu17
+          zulu
+        ];
+      })
     ];
   };
 }

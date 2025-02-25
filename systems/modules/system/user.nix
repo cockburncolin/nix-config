@@ -12,7 +12,7 @@ let
   moduleName = "makeUser";
 in
 {
-  imports = [];
+  imports = [ ];
   options = {
     "${moduleBase}"."${moduleName}" = {
       enable = lib.mkOption {
@@ -36,6 +36,7 @@ in
       hashedPassword = "$y$j9T$P0yrCluAkpRNQHuYv6qSW/$7m8zz7hzt4nm70591yJ2uB6Il05k6uRGu9R1kfFq092";
       description = "Colin Cockburn";
       extraGroups = [
+        "audio"
         "networkmanager"
         "wheel"
       ];
