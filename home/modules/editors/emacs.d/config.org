@@ -15,8 +15,9 @@
   - [[#nix-mode][Nix Mode]]
   - [[#elisp][ELisp]]
 - [[#emacs-ui][Emacs UI]]
-  - [[#general-ui-tweaks][General UI Tweaks]]
   - [[#dashboard][Dashboard]]
+  - [[#general-ui-tweaks][General UI Tweaks]]
+  - [[#mode-line][Mode Line]]
   - [[#themeing][Themeing]]
 - [[#editor-config][Editor Config]]
   - [[#indentation-guides][Indentation Guides]]
@@ -171,17 +172,6 @@ Add in a formator for ELisp
     (add-hook 'elisp-mode-hook 'elisp-autofmt-mode))
 #+end_src
 * Emacs UI
-** General UI Tweaks
-#+begin_src emacs-lisp
-  ;; UI settings
-  (setq inhibit-startup-message t)
-  (menu-bar-mode -1)
-  (scroll-bar-mode -1)
-  (tool-bar-mode -1)
-  ;; enable line numbers in programming modes only
-  (add-hook 'prog-mode-hook #'display-line-numbers-mode)
-#+end_src
-
 ** Dashboard
 #+begin_src emacs-lisp
   (use-package dashboard
@@ -193,6 +183,24 @@ Add in a formator for ELisp
       (dashboard-setup-startup-hook))
 #+end_src
 
+** General UI Tweaks
+#+begin_src emacs-lisp
+  ;; UI settings
+  (setq inhibit-startup-message t)
+  (menu-bar-mode -1)
+  (scroll-bar-mode -1)
+  (tool-bar-mode -1)
+  ;; enable line numbers in programming modes only
+  (add-hook 'prog-mode-hook #'display-line-numbers-mode)
+#+end_src
+
+** Mode Line
+#+begin_src emacs-lisp
+  (use-package doom-modeline
+    :init (doom-modeline-mode 1)
+    :config
+    (setq doom-modeline-buffer-file-name-style 'truncate-nil))
+#+end_src
 ** Themeing
 I use stylix with Nix for all my theming needs, it applies colourschemes automatically so no configuration in Emacs is needed.
 

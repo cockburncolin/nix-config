@@ -7,6 +7,7 @@ let
 in
 {
   imports = [
-    (import ./firefox.nix argSet)
+    # (import ./firefox.nix argSet)
+    (import ./librewolf.nix argSet)
   ];
 }

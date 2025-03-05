@@ -6,11 +6,10 @@
   inputs,
   pkgs,
   lib,
-  firefox-adds,
   ...
 }:
 let
-  moduleName = "firefox";
+  moduleName = "librewolf";
 in
 {
   options = {
@@ -23,35 +22,51 @@ in
   };
 
   config = lib.mkIf config."${moduleBase}"."${moduleName}".enable {
-    programs.firefox = {
+    programs.librewolf = {
       enable = true;
-      package = pkgs.librewolf;
       policies = {
-        DisableAccounts = true;
-        DisableFirefoxStudies = true;
-        DisablePocket = true;
-        DisableTelemetry = true;
-        DisplayBookmarksToolbar = "never";
-        HttpsOnlyMode = "enabled";
-        NoDefaultBookmarks = true;
-        OfferToSaveLogins = false;
-        OverrideFirstRunPage = "";
-        PasswordManagerEnabled = false;
+        ExtensionSettings = {
+          "*".installation_mode = "blocked";
+          "jid1-MnnxcxisBPnSXQ@jetpack" = {
+            install_url = "https://addons.mozilla.org/en-US/firefox/downloads/latest/privacy-badger17/latest.xpi";
+            installation_mode = "force_installed";
+          };
 
-        UserMessaging = {
-          UrlbarInterventions = false;
-          SkipOnboarding = true;
+          "sponsorBlocker@ajay.app" = {
+            install_url = "https://addons.mozilla.org/firefox/downloads/latest/sponsorblock/latest.xpi";
+            installation_mode = "force_installed";
+          };
+
+          "@testpilot-containers" = {
+            install_url = "https://addons.mozilla.org/en-US/firefox/downloads/latest/multi-account-containers/latest.xpi";
+            installation_mode = "force_installed";
+          };
+
+          "addon@darkreader.org" = {
+            install_url = "https://addons.mozilla.org/firefox/downloads/latest/darkreader/latest.xpi";
+            installation_mode = "force_installed";
+          };
+
+          "uBlock0@raymondhill.net" = {
+            install_url = "https://addons.mozilla.org/firefox/downloads/latest/ublock-origin/latest.xpi";
+            installation_mode = "force_installed";
+          };
+
+          "{762f9885-5a13-4abd-9c77-433dcd38b8fd}" = {
+            install_url = "https://addons.mozilla.org/firefox/downloads/latest/return-youtube-dislikes/latest.xpi";
+            installation_mode = "force_installed";
+          };
+
+          "{34daeb50-c2d2-4f14-886a-7160b24d66a4}" = {
+            install_url = "https://addons.mozilla.org/firefox/downloads/latest/youtube-shorts-block/latest.xpi";
+            installation_mode = "force_installed";
+          };
+
+          "{446900e4-71c2-419f-a6a7-df9c091e268b}" = {
+            install_url = "https://addons.mozilla.org/firefox/downloads/latest/bitwarden-password-manager/latest.xpi";
+            installation_mode = "force_installed";
+          };
         };
-
-        FirefoxHome = {
-          TopSites = false;
-          SponsoredTopSites = false;
-          Highlights = false;
-          Pocket = false;
-          SponseredPocket = false;
-          Snippets = false;
-        };
-
         Permissions = {
           Location = {
             BlockNewRequests = true;
@@ -69,70 +84,31 @@ in
           };
           Camera = {
             BlockNewRequests = true;
+            Allow = [
+              "https://teams.microsoft.com/"
+              "https://zoom.com"
+            ];
           };
           VirtualReality = {
             BlockNewRequests = true;
           };
         };
-        Preferences = {
-          "browser.urlbar.suggest.searches" = true; # Need this for basic search suggestions
-          "browser.urlbar.shortcuts.bookmarks" = false;
-          "browser.urlbar.shortcuts.history" = false;
-          "browser.urlbar.shortcuts.tabs" = false;
-
-          "browser.tabs.tabMinWidth" = 75; # Make tabs able to be smaller to prevent scrolling
-
-          "browser.aboutConfig.showWarning" = false; # No warning when going to config
-          "browser.warnOnQuitShortcut" = false;
-
-          "browser.tabs.loadInBackground" = true; # Load tabs automatically
-
-          "media.ffmpeg.vaapi.enabled" = true; # Enable hardware acceleration
-          "layers.acceleration.force-enabled" = true;
-          "gfx.webrender.all" = true;
-
-          "extensions.autoDisableScopes" = 0; # Automatically enable extensions
-          "extensions.update.enabled" = false;
-
-          "widget.use-xdg-desktop-portal.file-picker" = 1; # Use new gtk file picker instead of legacy one
-        };
       };
+      settings = {
+        "browser.toolbars.bookmarks.visibility" = "never";
+        "general.autoScroll" = true;
+        "middlemouse.paste" = false;
+        "network.http.referer.XOriginPolicy" = 2;
+        "privacy.resistFingerprinting.letterboxing" = true;
+        "media.eme.enabled" = true;
+        "signon.autofillForms" = false;
+        "toolkit.cosmeticAnimations.enabled" = false;
+      };
+
       profiles.default = {
         id = 0;
         isDefault = true;
         name = "default";
-        extensions = with firefox-adds; [
-          bitwarden
-          darkreader
-          multi-account-containers
-          privacy-badger
-          return-youtube-dislikes
-          sponsorblock
-          ublock-origin
-          youtube-shorts-block
-        ];
-        settings = {
-          "browser.aboutConfig.showWarning" = false;
-          "browser.search.defaultenginename" = "Searx";
-          "browser.search.order.1" = "Searx";
-          "browser.startup.homepage" = "https://home.colincockburn.xyz";
-          "browser.tabs.closeWindowWithLastTab" = false;
-          "browser.toolbarbuttons.introduced.pocket-button" = false;
-          "browser.toolbars.bookmarks.visibility" = "never";
-          "extensions.autoDisableScopes" = 0;
-          "extensions.formautofill.addresses.enabled" = false;
-          "extensions.formautofill.creditCards.enabled" = false;
-          "extensions.pocket.enabled" = false;
-          "full-screen-api.transition-duration.enter" = "0 0";
-          "full-screen-api.transition-duration.leave" = "0 0";
-          "full-screen-api.transition.timeout" = "0";
-          "full-screen-api.warning.delay" = "0";
-          "full-screen-api.warning.timeout" = "0";
-          "general.autoScroll" = true;
-          "media.eme.enabled" = true;
-          "signon.autofillForms" = false;
-          "toolkit.cosmeticAnimations.enabled" = false;
-        };
         search = {
           force = true;
           default = "Searx";
@@ -215,7 +191,10 @@ in
                   ];
                 }
               ];
-              definedAliases = [ "@ma" ];
+              definedAliases = [
+                "@mp"
+                "@melpa"
+              ];
             };
             "Bing".metaData.hidden = true;
             "Google".metaData.hidden = true;

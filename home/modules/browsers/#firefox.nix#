@@ -163,7 +163,7 @@ in
                   template = "https://home-manager-options.extranix.com/";
                   params = [
                     {
-                      name = "release";
+c                      name = "release";
                       value = "master";
                     }
                     {

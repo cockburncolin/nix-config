@@ -24,7 +24,7 @@ in
       };
 
       theme = lib.mkOption {
-        default = "grayscale-dark";
+        default = "black-metal-immortal";
         description = "base 16 theme to use";
         type = lib.types.str;
       };
@@ -38,20 +38,10 @@ in
   };
 
   config = lib.mkIf config."${moduleBase}"."${moduleName}".enable {
-    gtk = {
-      enable = true;
-      gtk3.extraConfig = {
-        gtk-application-prefer-dark-theme = 1;
-      };
-      gtk4.extraConfig = {
-        gtk-application-prefer-dark-theme = 1;
-      };
-
-      # icons weren't working when declared through stylix
-      iconTheme = {
-        package = pkgs.papirus-icon-theme;
-        name = "Papirus";
-      };
+    # icons weren't working when declared through stylix
+    gtk.iconTheme = {
+      package = pkgs.papirus-icon-theme;
+      name = "Papirus";
     };
 
     stylix = {
