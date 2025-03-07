@@ -95,13 +95,76 @@ in
         };
       };
       settings = {
+        "browser.startup.homepage" = "https://home.colincockburn.xyz";
         "browser.toolbars.bookmarks.visibility" = "never";
+        "browser.warnOnQuitShortcut" = false;
         "general.autoScroll" = true;
+        "media.eme.enabled" = true;
         "middlemouse.paste" = false;
         "network.http.referer.XOriginPolicy" = 2;
-        "privacy.resistFingerprinting.letterboxing" = true;
-        "media.eme.enabled" = true;
+        "privacy.resistFingerprinting.letterboxing" = false;
         "signon.autofillForms" = false;
+        "privacy.clearOnShutdown_v2.historyFormDataAndDownloads" = true;
+        "browser.uiCustomization.state" = ''
+          {
+            "placements": {
+              "widget-overflow-fixed-list": [],
+              "unified-extensions-area": [
+                "_34daeb50-c2d2-4f14-886a-7160b24d66a4_-browser-action",
+                "_762f9885-5a13-4abd-9c77-433dcd38b8fd_-browser-action",
+                "addon_darkreader_org-browser-action",
+                "_446900e4-71c2-419f-a6a7-df9c091e268b_-browser-action",
+                "_testpilot-containers-browser-action",
+                "sponsorblocker_ajay_app-browser-action",
+                "jid1-mnnxcxisbpnsxq_jetpack-browser-action",
+                "ublock0_raymondhill_net-browser-action"
+              ],
+              "nav-bar": [
+                "back-button",
+                "forward-button",
+                "stop-reload-button",
+                "urlbar-container",
+                "downloads-button",
+                "fxa-toolbar-menu-button",
+                "unified-extensions-button"
+              ],
+              "toolbar-menubar": [
+                "menubar-items"
+              ],
+              "TabsToolbar": [
+                "tabbrowser-tabs",
+                "new-tab-button",
+                "alltabs-button"
+              ],
+              "vertical-tabs": [],
+              "PersonalToolbar": [
+                "import-button",
+                "personal-bookmarks"
+              ]
+            },
+            "seen": [
+              "developer-button",
+              "_34daeb50-c2d2-4f14-886a-7160b24d66a4_-browser-action",
+              "_762f9885-5a13-4abd-9c77-433dcd38b8fd_-browser-action",
+              "addon_darkreader_org-browser-action",
+              "_testpilot-containers-browser-action",
+              "sponsorblocker_ajay_app-browser-action",
+              "jid1-mnnxcxisbpnsxq_jetpack-browser-action",
+              "_446900e4-71c2-419f-a6a7-df9c091e268b_-browser-action",
+              "ublock0_raymondhill_net-browser-action"
+            ],
+            "dirtyAreaCache": [
+              "nav-bar",
+              "vertical-tabs",
+              "PersonalToolbar",
+              "unified-extensions-area",
+              "toolbar-menubar",
+              "TabsToolbar"
+            ],
+            "currentVersion": 20,
+            "newElementCount": 2
+          }
+        '';
         "toolkit.cosmeticAnimations.enabled" = false;
       };
 
