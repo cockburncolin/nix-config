@@ -34,6 +34,10 @@ in
       extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
     };
 
+    home.packages = with pkgs; [
+      hyprshade
+    ];
+
     wayland.windowManager.hyprland = {
       enable = true;
       systemd.variables = [ "--all" ];

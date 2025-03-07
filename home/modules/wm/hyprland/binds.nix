@@ -59,6 +59,9 @@ in
           ## Disable gaps
           "$mod, G, exec, hyprctl keyword general:gaps_in 0 && hyprctl keyword general:gaps_out 0"
           "$mod, R, exec, hyprctl reload"
+
+          ## hyprshade
+          "$mod, F1, exec, hyprshade toggle blue-light-filter"
         ]
         ++ (
           # workspaces
