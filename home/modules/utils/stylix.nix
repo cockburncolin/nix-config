@@ -24,7 +24,7 @@ in
       };
 
       theme = lib.mkOption {
-        default = "black-metal-immortal";
+        default = "onedark";
         description = "base 16 theme to use";
         type = lib.types.str;
       };

@@ -30,7 +30,7 @@ in
   };
 
   config = lib.mkIf config.${moduleBase}.${moduleName}.enable {
-    programs.zsh.enable = true;
+    programs.fish.enable = true;
     users.users."${config.${moduleBase}.${moduleName}.userName}" = {
       isNormalUser = true;
       hashedPassword = "$y$j9T$P0yrCluAkpRNQHuYv6qSW/$7m8zz7hzt4nm70591yJ2uB6Il05k6uRGu9R1kfFq092";
@@ -40,7 +40,7 @@ in
         "networkmanager"
         "wheel"
       ];
-      shell = pkgs.zsh;
+      shell = pkgs.fish;
     };
   };
 }

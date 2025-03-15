@@ -126,7 +126,7 @@ in
                 "urlbar-container",
                 "downloads-button",
                 "fxa-toolbar-menu-button",
-                "unified-extensions-button"
+                "unified-extensions-button",
               ],
               "toolbar-menubar": [
                 "menubar-items"
@@ -151,7 +151,7 @@ in
               "sponsorblocker_ajay_app-browser-action",
               "jid1-mnnxcxisbpnsxq_jetpack-browser-action",
               "_446900e4-71c2-419f-a6a7-df9c091e268b_-browser-action",
-              "ublock0_raymondhill_net-browser-action"
+              "ublock0_raymondhill_net-browser-action",
             ],
             "dirtyAreaCache": [
               "nav-bar",

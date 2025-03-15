@@ -9,7 +9,7 @@
   ...
 }:
 let
-  moduleName = "sddm";
+  moduleName = "fish";
 in
 {
   imports = [ ];
@@ -25,13 +25,19 @@ in
   };
 
   config = lib.mkIf config."${moduleBase}"."${moduleName}".enable {
-    environment.systemPackages = with pkgs; [ where-is-my-sddm-theme ];
-    services.displayManager.sddm = {
+    programs.fish = {
       enable = true;
-      package = lib.mkForce pkgs.libsForQt5.sddm;
-      autoNumlock = true;
-      wayland.enable = true;
-      theme = "where_is_my_sddm_theme";
+      plugins = [
+        {
+          name = "pure-fish";
+          src = pkgs.fetchFromGitHub {
+            owner = "pure-fish";
+            repo = "pure";
+            rev = "28447d2e7a4edf3c954003eda929cde31d3621d2";
+            sha256 = "1vlxa9va9j616ajbcw9amqgz43cib2vds6yd56dp3rad9wynlg7k";
+          };
+        }
+      ];
     };
   };
 }

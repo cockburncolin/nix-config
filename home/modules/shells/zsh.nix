@@ -1,11 +1,16 @@
-{moduleBase ? "misc"}: {
+{
+  moduleBase ? "misc",
+}:
+{
   config,
   lib,
   pkg,
   ...
-}: let
+}:
+let
   moduleName = "zsh";
-in {
+in
+{
   options = {
     ${moduleBase}.${moduleName} = {
       enable = lib.mkOption {
@@ -34,12 +39,11 @@ in {
       enable = true;
       oh-my-zsh = lib.mkIf config.shells.zsh.omz.enable {
         enable = true;
-        plugins = ["git" "sudo"];
+        plugins = [
+          "git"
+          "sudo"
+        ];
         theme = "${config.shells.zsh.omz.theme}";
-      };
-
-      shellAliases = {
-        hms = "home-manager switch --flake $HOME/.config/nix#desktop";
       };
 
       dirHashes = {

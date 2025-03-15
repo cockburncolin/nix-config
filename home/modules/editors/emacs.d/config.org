@@ -10,31 +10,35 @@
   - [[#evil-mode][Evil Mode]]
   - [[#which-key][Which Key]]
   - [[#general-keybinds][General Keybinds]]
+  - [[#nerd-icons][Nerd Icons]]
 - [[#languagesmajor-modes][Languages/Major Modes]]
   - [[#json-mode][Json Mode]]
+  - [[#markdown][Markdown]]
   - [[#nix-mode][Nix Mode]]
   - [[#elisp][ELisp]]
 - [[#emacs-ui][Emacs UI]]
   - [[#dashboard][Dashboard]]
+  - [[#extra-padding][Extra Padding]]
   - [[#general-ui-tweaks][General UI Tweaks]]
   - [[#mode-line][Mode Line]]
   - [[#themeing][Themeing]]
 - [[#editor-config][Editor Config]]
-  - [[#indentation-guides][Indentation Guides]]
+  - [[#disable-autosaving][Disable autosaving]]
+  - [[#indentation][Indentation]]
   - [[#golden-ratio][Golden Ratio]]
-  - [[#modeline][Modeline]]
   - [[#sudo-edit][Sudo Edit]]
   - [[#zooming-inout][Zooming In/Out]]
 - [[#org-mode-config][Org-Mode Config]]
-  - [[#bullets][Bullets]]
-  - [[#indentation][Indentation]]
+  - [[#indentation-1][Indentation]]
   - [[#table-of-contents][Table of Contents]]
+  - [[#modern-org][Modern Org]]
   - [[#tempo-config][Tempo config]]
 - [[#utilities][Utilities]]
-  - [[#treemacs][Treemacs]]
   - [[#magit][Magit]]
-  - [[#vterm][Vterm]]
   - [[#popper][Popper]]
+  - [[#treemacs][Treemacs]]
+  - [[#vterm][Vterm]]
+  - [[#vertico][Vertico]]
 
 * Important Packages
 Please note that the order in this section is important, Ex if Straight isn't first some packages might not get installed.
@@ -148,12 +152,22 @@ Straight is my preffered package manager, it is configured to add :straight t by
   )
 
 #+end_src
-
+** Nerd Icons
+#+begin_src emacs-lisp
+  (use-package nerd-icons)
+#+end_src
 * Languages/Major Modes
 ** Json Mode
 #+begin_src emacs-lisp
   (use-package json-mode
     :mode "\\.json\\'")
+#+end_src
+
+** Markdown
+As much as I would like to use Org for everything, unfortunately that's not feasible.
+#+begin_src emacs-lisp
+  (use-package markdown-mode
+    :mode "\\.md\\'")
 #+end_src
 ** Nix Mode
 #+begin_src emacs-lisp
@@ -165,7 +179,7 @@ Straight is my preffered package manager, it is configured to add :straight t by
       (add-hook 'nix-mode-hook 'nixfmt-on-save-mode)))
 #+end_src
 ** ELisp
-Add in a formator for ELisp
+Add in a formater for ELisp
 #+begin_src emacs-lisp
   (use-package elisp-autofmt
     :config
@@ -180,8 +194,22 @@ Add in a formator for ELisp
     (setq dashboard-center-content t)
     (setq dashboard-vertically-center-content t)
     :config
-      (dashboard-setup-startup-hook))
+    (dashboard-setup-startup-hook)
+    (setq dashboard-startup-banner "~/.config/emacs/osaka.png")
+    (setq dashboard-item-shortcuts '((recents   . "r")
+                                     (bookmarks . "b")
+                                     (projects  . "p")
+                                     (agenda    . "a")
+                                     (registers . "e")))
+    (setq dashboard-display-icons-p t)
+    (setq dashboard-icon-type 'nerd-icons))
 #+end_src
+** Extra Padding
+# #+begin_src emacs-lisp
+#   (use-package spacious-padding
+#     :config
+#     (spacious-padding-mode 1))
+# #+end_src
 
 ** General UI Tweaks
 #+begin_src emacs-lisp
@@ -205,15 +233,24 @@ Add in a formator for ELisp
 I use stylix with Nix for all my theming needs, it applies colourschemes automatically so no configuration in Emacs is needed.
 
 * Editor Config
-** Indentation Guides
-Enables visual indentation markers, options for format are fill, column, character and bitmap
+** Disable autosaving
+Auto saving creates a bunch of random files that get hard to work with in VCS projects, and I never use them anyways.
 #+begin_src emacs-lisp
+  (auto-save-mode nil)
+#+end_src
+
+** Indentation
+#+begin_src emacs-lisp
+  (setq tab-width 4)
+
+  ;; Enables visual indentation markers, options for format are fill, column, character and bitmap
   (use-package highlight-indent-guides
    :init
    (setq highlight-indent-guides-method 'bitmap)
    :config
      (add-hook 'prog-mode-hook 'highlight-indent-guides-mode))
 #+end_src
+
 ** Golden Ratio
 Automatically resizes windows when editing them
 #+begin_src emacs-lisp
@@ -222,11 +259,7 @@ Automatically resizes windows when editing them
     (setq golden-ratio-auto-scale t)
     (golden-ratio-mode 1))
 #+end_src
-** Modeline
-#+begin_src emacs-lisp
-  (use-package simple-modeline
-  :hook (after-init . simple-modeline-mode))
-#+end_src
+
 ** Sudo Edit
 [[https://github.com/nflath/sudo-edit][sudo-edit]] gives us the ability to open files with sudo privileges or switch over to editing with sudo privileges if we initially opened the file without such privileges.
 
@@ -249,14 +282,14 @@ You can use the bindings CTRL plus =/- for zooming in/out.  You can also use CTR
 #+end_src
 
 * Org-Mode Config
-** Bullets
-Makes Org mode look a bit better
-#+begin_src emacs-lisp
-  (add-hook 'org-mode-hook 'org-indent-mode)
-  (use-package org-bullets
-    :config
-    (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1))))
-#+end_src
+# ** Bullets
+# Makes Org mode look a bit better
+# #+begin_src emacs-lisp
+#   (add-hook 'org-mode-hook 'org-indent-mode)
+#   (use-package org-bullets
+#     :config
+#     (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1))))
+# #+end_src
 
 ** Indentation
 This should make formatting in Org-mode a bit better
@@ -269,6 +302,14 @@ This should make formatting in Org-mode a bit better
   (use-package toc-org
       :commands toc-org-enable
       :init (add-hook 'org-mode-hook 'toc-org-enable))
+#+end_src
+
+** Modern Org
+#+begin_src emacs-lisp
+  (use-package org-modern
+    :config
+    (add-hook 'org-mode-hook #'org-modern-mode)
+    (add-hook 'org-agenda-finalize-hook #'org-modern-agenda))
 #+end_src
 
 ** Tempo config
@@ -292,33 +333,12 @@ Org-tempo is not a separate package but a module within org that can be enabled.
 #+end_src
 
 * Utilities
-** Treemacs
-Treemacs is a file explorer for emacs
-#+begin_src emacs-lisp
-  (use-package treemacs
-    :config
-    (leader-keys "t T" '(treemacs :wk "Toggle Treemacs"))
-    (use-package treemacs-evil
-      :after (treemacs evil))
-    (use-package treemacs-nerd-icons)
-    (use-package treemacs-magit)
-  )
-#+end_src
 ** Magit
 Magit is a git interface for emacs.
 #+begin_src emacs-lisp
   (use-package magit)
 #+end_src
-** Vterm
-Vterm provides a terminal to use in emacs, requires cmake & libterm to build.  A lot of Linux distros provide a package for this as well so you don't have to complile it yourself if you don't want to.
-#+begin_src emacs-lisp
-  (use-package vterm
-    :config
-    (setq vterm-kill-buffer-on-exit t
-          vterm-always-compile-module t)
-    (leader-keys "v" '(vterm :wk "Launch VTerm"))
-  )
-#+end_src
+
 ** Popper
 Lets you declare buffers as popup windows and allows you to toggle them with a keybind
 #+begin_src emacs-lisp
@@ -338,4 +358,36 @@ Lets you declare buffers as popup windows and allows you to toggle them with a k
       "p c" '(popper-cycle  :wk "Cycle Popper Buffer")
     )
   )
+#+end_src
+
+** Treemacs
+Treemacs is a file explorer for emacs
+#+begin_src emacs-lisp
+  (use-package treemacs
+    :config
+    (leader-keys "t T" '(treemacs :wk "Toggle Treemacs"))
+    (use-package treemacs-evil
+      :after (treemacs evil))
+    (use-package treemacs-nerd-icons)
+    (use-package treemacs-magit)
+  )
+#+end_src
+
+** Vterm
+Vterm provides a terminal to use in emacs, requires cmake & libterm to build.  A lot of Linux distros provide a package for this as well so you don't have to complile it yourself if you don't want to.
+#+begin_src emacs-lisp
+  (use-package vterm
+    :config
+    (setq vterm-kill-buffer-on-exit t
+          vterm-always-compile-module t)
+    (leader-keys "v" '(vterm :wk "Launch VTerm"))
+  )
+#+end_src
+
+** Vertico
+Improves upon the default completion interface in Emacs by providing a performant and minimalistic completion UI.
+#+begin_src emacs-lisp
+  (use-package vertico
+    :init
+    (vertico-mode))
 #+end_src

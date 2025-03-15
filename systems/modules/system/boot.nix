@@ -35,6 +35,7 @@ in
 
   config = lib.mkIf config."${moduleBase}"."${moduleName}".enable {
     boot = {
+      kernelModules = [ "sg" ];
       loader =
         if config.${moduleBase}.${moduleName}.uefi.enable then
           {
