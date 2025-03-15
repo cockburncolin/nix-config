@@ -7,6 +7,7 @@ let
 in
 {
   imports = [
+    (import ./lutris.nix argSet)
     (import ./nintendo.nix argSet)
     (import ./prismLauncher.nix argSet)
   ];

@@ -9,7 +9,7 @@
   ...
 }:
 let
-  moduleName = "fish";
+  moduleName = "lutris";
 in
 {
   imports = [ ];
@@ -25,19 +25,8 @@ in
   };
 
   config = lib.mkIf config."${moduleBase}"."${moduleName}".enable {
-    programs.fish = {
-      enable = true;
-      plugins = [
-        {
-          name = "hydro";
-          src = pkgs.fetchFromGitHub {
-            owner = "jorgebucaran";
-            repo = "hydro";
-            rev = "75ab7168a35358b3d08eeefad4ff0dd306bd80d4";
-            sha256 = "0cd6fa6g0jdjdsxgy5qja2jx180s26v5hcs71npj5zim9sqvi2j1";
-          };
-        }
-      ];
-    };
+    home.packages = with pkgs; [
+      lutris
+    ];
   };
 }
