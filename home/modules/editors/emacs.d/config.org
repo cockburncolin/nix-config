@@ -336,7 +336,10 @@ Org-tempo is not a separate package but a module within org that can be enabled.
 ** Magit
 Magit is a git interface for emacs.
 #+begin_src emacs-lisp
-  (use-package magit)
+  (use-package magit
+    :config
+    (leader-keys
+      "g"  '(magit :wk "Launch Magit")))
 #+end_src
 
 ** Popper
