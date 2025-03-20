@@ -4,6 +4,7 @@
     windowrulev2 = [
       "workspace 2, title:(.*)(Gnu Emacs)(.*)"
       "workspace 3, class:steam"
+      "workspace 3, class:net.lutris.Lutris"
     ];
   };
 }

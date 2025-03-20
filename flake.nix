@@ -44,7 +44,7 @@
     in
     {
       nixosConfigurations = {
-        desktop = nixpkgs.lib.nixosSystem {
+        caeser = nixpkgs.lib.nixosSystem {
           specialArgs = { inherit inputs; };
           modules = [
             ./systems/hosts/desktop/config.nix
@@ -52,7 +52,7 @@
           ];
         };
 
-        laptop = nixpkgs.lib.nixosSystem {
+        brutus = nixpkgs.lib.nixosSystem {
           specialArgs = { inherit inputs; };
           modules = [
             ./systems/hosts/laptop/config.nix
@@ -61,14 +61,26 @@
         };
       };
 
-      homeConfigurations.desktop = home-manager.lib.homeManagerConfiguration {
-        inherit pkgs;
-        extraSpecialArgs = { inherit anyrun-pkgs firefox-adds; };
-        modules = [
-          anyrun-hm
-          stylix.homeManagerModules.stylix
-          ./home/hosts/desktop.nix
-        ];
+      homeConfigurations = {
+        caeser = home-manager.lib.homeManagerConfiguration {
+          inherit pkgs;
+          extraSpecialArgs = { inherit anyrun-pkgs firefox-adds; };
+          modules = [
+            anyrun-hm
+            stylix.homeManagerModules.stylix
+            ./home/hosts/desktop.nix
+          ];
+        };
+
+        brutus = home-manager.lib.homeManagerConfiguration {
+          inherit pkgs;
+          extraSpecialArgs = { inherit anyrun-pkgs firefox-adds; };
+          modules = [
+            anyrun-hm
+            stylix.homeManagerModules.stylix
+            ./home/hosts/laptop.nix
+          ];
+        };
       };
     };
 }
