@@ -20,7 +20,8 @@ in
   config = {
     # Shell aliases for shells
     home.shellAliases = {
-      hms = "home-manager switch --flake $HOME/.config/nix#desktop -b backup";
+      hms = "home-manager switch --flake $HOME/.config/nix#$hostname -b backup";
+      nrbs = "sudo nixos-rebuild switch --flake $HOME/.config/nix#$hostname --upgrade";
     };
 
     # Other shell utils
@@ -28,7 +29,10 @@ in
       bat
       fd
       fzf
-      thefuck
     ];
+
+    programs = {
+      thefuck.enable = true;
+    };
   };
 }
