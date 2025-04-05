@@ -69,6 +69,13 @@
     ];
   };
 
+  # Steamdeck SD Card
+  fileSystems."/mnt/sd" = {
+    device = "/dev/disk/by-uuid/c4a520e2-33f0-45df-b4b7-f279dc318f48";
+    fsType = "ext4";
+    options = [ "noauto" ];
+  };
+
   swapDevices = [
     { device = "/dev/disk/by-uuid/a2911656-03a8-457c-91fa-2674d276fdea"; }
   ];

@@ -31,6 +31,14 @@ in
         loginShellInit = "tide configure --auto --style=Lean --prompt_colors='16 colors' --show_time=No --lean_prompt_height='Two lines' --prompt_connection=Disconnected --prompt_spacing=Sparse --icons='Few icons' --transient=Yes";
         functions = {
           fish_greeting = "";
+          create-project = ''
+            set dir "$HOME/.local/src/$argv[1]"
+            mkdir -p "$dir/src"
+            echo "* $argv[1]" >> "$dir/README.org"
+            nix flake new --template "https://flakehub.com/f/the-nix-way/dev-templates/*#c-cpp $dir"
+            git init $dir
+            cd $dir
+          '';
         };
         plugins = [
           {

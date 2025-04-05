@@ -1,4 +1,4 @@
-{ ... }:
+{ config, pkgs, ... }:
 let
   moduleBase = "games";
   argSet = {
@@ -11,4 +11,5 @@ in
     (import ./nintendo.nix argSet)
     (import ./prismLauncher.nix argSet)
   ];
+  config.home.packages = with pkgs; [ heroic ];
 }

@@ -205,11 +205,12 @@ Add in a formater for ELisp
     (setq dashboard-icon-type 'nerd-icons))
 #+end_src
 ** Extra Padding
-# #+begin_src emacs-lisp
-#   (use-package spacious-padding
-#     :config
-#     (spacious-padding-mode 1))
-# #+end_src
+#+begin_src emacs-lisp
+  (use-package spacious-padding
+    :config
+    (setq spacious-padding-widths '(:internal-border-width 5))
+    (spacious-padding-mode 1))
+#+end_src
 
 ** General UI Tweaks
 #+begin_src emacs-lisp
@@ -282,15 +283,6 @@ You can use the bindings CTRL plus =/- for zooming in/out.  You can also use CTR
 #+end_src
 
 * Org-Mode Config
-# ** Bullets
-# Makes Org mode look a bit better
-# #+begin_src emacs-lisp
-#   (add-hook 'org-mode-hook 'org-indent-mode)
-#   (use-package org-bullets
-#     :config
-#     (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1))))
-# #+end_src
-
 ** Indentation
 This should make formatting in Org-mode a bit better
 #+begin_src emacs-lisp

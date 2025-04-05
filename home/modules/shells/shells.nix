@@ -21,7 +21,12 @@ in
     # Shell aliases for shells
     home.shellAliases = {
       hms = "home-manager switch --flake $HOME/.config/nix#$hostname -b backup";
+      hmn = "home-manager news";
       nrbs = "sudo nixos-rebuild switch --flake $HOME/.config/nix#$hostname --upgrade";
+    };
+
+    home.sessionVariables = {
+      NIXPKGS_ALLOW_UNFREE = 1;
     };
 
     # Other shell utils
