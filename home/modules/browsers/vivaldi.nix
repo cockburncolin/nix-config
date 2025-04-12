@@ -25,6 +25,6 @@ in
   };
 
   config = lib.mkIf config."${moduleBase}"."${moduleName}".enable {
-    home.packages = with pkgs; [ vivaldi-browser ];
+    home.packages = with pkgs; [ vivaldi ];
   };
 }

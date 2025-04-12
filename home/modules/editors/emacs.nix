@@ -10,7 +10,7 @@
 }:
 let
   moduleName = "emacs";
-  emacsDir = config.lib.file.mkOutOfStoreSymlink "/home/colin/.config/nix/home/modules/editors/emacs.d";
+  emacsDir = config.lib.file.mkOutOfStoreSymlink "$HOME/.config/nix/home/modules/editors/emacs.d";
 in
 {
   imports = [ ];
@@ -31,16 +31,19 @@ in
     };
 
     programs.emacs = {
-	enable = true;
-	package = pkgs.emacs-gtk;
+      enable = true;
+      package = pkgs.emacs-gtk;
     };
 
+    services.emacs = {
+      enable = true;
+    };
     # Required for vterm
-    home.packages = with pkgs; [
-      cmake
-      gcc
-      gnumake
-      libtool
-    ];
+    #   home.packages = with pkgs; [
+    #     cmake
+    #     gcc
+    #     gnumake
+    #     libtool
+    #   ];
   };
 }

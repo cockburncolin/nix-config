@@ -27,6 +27,11 @@ in
   config = lib.mkIf config."${moduleBase}"."${moduleName}".enable {
     security.pam.services.hyprlock = { };
 
+    programs.nix-ld = {
+      enable = true;
+      libraries = with pkgs; [ ];
+    };
+
     fonts.packages = with pkgs.nerd-fonts; [
       symbols-only
       iosevka

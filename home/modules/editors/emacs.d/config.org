@@ -12,6 +12,7 @@
   - [[#general-keybinds][General Keybinds]]
   - [[#nerd-icons][Nerd Icons]]
 - [[#languagesmajor-modes][Languages/Major Modes]]
+  - [[#web-modes][Web Modes]]
   - [[#json-mode][Json Mode]]
   - [[#markdown][Markdown]]
   - [[#nix-mode][Nix Mode]]
@@ -157,6 +158,11 @@ Straight is my preffered package manager, it is configured to add :straight t by
   (use-package nerd-icons)
 #+end_src
 * Languages/Major Modes
+** Web Modes
+#+begin_src emacs-lisp
+  (use-package typescript-mode
+    :mode "\\.tsx\\'")
+#+end_src
 ** Json Mode
 #+begin_src emacs-lisp
   (use-package json-mode

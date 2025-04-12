@@ -36,9 +36,9 @@ in
       userSettings = {
         "telemetry.enableTelemetry" = false;
         "editor.quickSuggestions" = {
-          "other" = false;
-          "comments" = false;
-          "strings" = false;
+          "other" = true;
+          "comments" = true;
+          "strings" = true;
         };
         "editor.minimap.enabled" = false;
         "git.autofetch" = true;
