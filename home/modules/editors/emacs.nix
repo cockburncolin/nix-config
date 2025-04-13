@@ -10,7 +10,7 @@
 }:
 let
   moduleName = "emacs";
-  emacsDir = config.lib.file.mkOutOfStoreSymlink "$HOME/.config/nix/home/modules/editors/emacs.d";
+  emacsDir = config.lib.file.mkOutOfStoreSymlink "/home/colin/.config/nix/home/modules/editors/emacs.d";
 in
 {
   imports = [ ];

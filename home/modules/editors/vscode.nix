@@ -30,7 +30,6 @@ in
       enableUpdateCheck = false;
       extensions = with pkgs.vscode-extensions; [
         arrterian.nix-env-selector
-        esbenp.prettier-vscode
         jnoortheen.nix-ide
         vscodevim.vim
       ];
