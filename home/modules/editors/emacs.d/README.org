@@ -1,0 +1,51 @@
+* My Emacs Config
+Uses straight for package management, and general keybinds for all keybindings.
+
+Evil mode gang 'til I die.
+
+** Key Bindings
+SPC is configured as the leader key, which key is also installed for quick reference when in Emacs. Most keys are in a sequence, with the first being a "category" key of sorts. 
+
+|----------+------------------------------------------|
+| key seq. | action                                   |
+|----------+------------------------------------------|
+| b        | Buffer Category                          |
+|----------+------------------------------------------|
+| b b      | Switch Buffer                            |
+| b i      | Ibuffer                                  |
+| b k      | Kill this buffer                         |
+| b n      | Next buffer                              |
+| b p      | Previous Buffer                          |
+| b r      | Reload Buffer                            |
+|----------+------------------------------------------|
+| e        | Evaulate Category                        |
+|----------+------------------------------------------|
+| e b      | Evaulate ELISP in Buffer                 |
+| e d      | Evaluate defun containing or after point |
+| e e      | Evaulate ELISP expression                |
+| e l      | Evaulate ELISP expression before point   |
+| e r      | Evaulate ELISP in region                 |
+|----------+------------------------------------------|
+| h        | Help Category                            |
+|----------+------------------------------------------|
+| h f      | Describe function                        |
+| h v      | Describe variable                        |
+|----------+------------------------------------------|
+| t        | Toggle Category                          |
+|----------+------------------------------------------|
+| t l      | Toggle line numbers                      |
+| t t      | Toggle truncated lines                   |
+|----------+------------------------------------------|
+| o        | Org-Mode Specific Keys                   |
+|----------+------------------------------------------|
+| o e      | Edit source block                        |
+| o E      | Exit source block                        |
+|----------+------------------------------------------|
+| g        | Launch Magit                             |
+|----------+------------------------------------------|
+| f        | Privilged Editor Category                |
+|----------+------------------------------------------|
+| f u      | Sudo find file                           |
+| f U      | Sudo edit current file                   |
+|----------+------------------------------------------|
+
