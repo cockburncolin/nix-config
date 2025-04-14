@@ -20,8 +20,9 @@ in
   config = {
     # Shell aliases for shells
     home.shellAliases = {
-      hms = "home-manager switch --flake $HOME/.config/nix#$hostname -b backup";
+      ec = "emacsclient -r";
       hmn = "home-manager news";
+      hms = "home-manager switch --flake $HOME/.config/nix#$hostname -b backup";
       nrbs = "sudo nixos-rebuild switch --flake $HOME/.config/nix#$hostname --upgrade";
     };
 
