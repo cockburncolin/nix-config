@@ -7,6 +7,5 @@ in
 {
   imports = [
     (import ./emacs.nix argSet)
-    (import ./vscode.nix argSet)
   ];
 }
