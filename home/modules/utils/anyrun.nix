@@ -6,12 +6,12 @@
   config,
   lib,
   pkgs,
-  anyrun-hm,
-  anyrun-pkgs,
+  # anyrun-hm,
+  # anyrun-pkgs,
   ...
 }:
 let
-  moduleName = "anyrun";
+  moduleName = "tofi";
 in
 {
   imports = [ ];
@@ -27,41 +27,9 @@ in
   };
 
   config = lib.mkIf config."${moduleBase}"."${moduleName}".enable {
-    programs.anyrun = {
+    programs.tofi = {
       enable = true;
-      config = {
-        x = {
-          fraction = 0.5;
-        };
-        y = {
-          fraction = 0.3;
-        };
-        width = {
-          fraction = 0.3;
-        };
-        height = {
-          # absolute = 0;
-          fraction = 0.2;
-        };
-        hideIcons = false;
-        ignoreExclusiveZones = false;
-        layer = "overlay";
-        hidePluginInfo = false;
-        closeOnClick = false;
-        showResultsImmediately = false;
-        maxEntries = null;
-
-        plugins = with anyrun-pkgs; [
-          applications
-          dictionary
-          translate
-        ];
-      };
-      extraCss = ''
-        window {
-          opacity: 20%;
-        }
-      '';
+      settings = {};
     };
   };
 }

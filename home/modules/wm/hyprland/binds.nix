@@ -5,7 +5,7 @@
 }:
 let
   editor = "emacsclient -a nvim -c";
-  menu = "anyrun";
+  menu = "tofi-drun --drun-launch=true";
   term = "kitty";
 in
 {
@@ -13,6 +13,7 @@ in
     wayland.windowManager.hyprland.settings = {
       "$mod" = "SUPER";
 
+      # binds that allow you to hold the key and it will repeat
       binde = [
         # resize windows
         "$mod+Alt, Right, resizeactive, 30 0"

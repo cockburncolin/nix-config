@@ -11,6 +11,11 @@
 }:
 let
   moduleName = "stylix";
+  theme = "${pkgs.base16-schemes}/share/themes/dracula.yaml";
+  wallpaper = pkgs.runCommand "image.png" { } ''
+    COLOR=$(${pkgs.yq}/bin/yq -r .palette.base01 ${theme})
+    ${pkgs.imagemagick}/bin/magick -size 1920x1080 xc:$COLOR $out
+  '';
 in
 {
   imports = [ ];
@@ -24,16 +29,11 @@ in
       };
 
       theme = lib.mkOption {
-        default = "onedark";
+        default = "oxocarbon-dark";
         description = "base 16 theme to use";
         type = lib.types.str;
       };
 
-      wallpaper = lib.mkOption {
-        default = "mountains.png";
-        description = "filename to choose from resources/wallpapers folder";
-        type = lib.types.str;
-      };
     };
   };
 
@@ -46,13 +46,12 @@ in
 
     stylix = {
       enable = true;
+      polarity = "dark";
       # images and themes must be set here as well as system wide inheritance doesn't seem to carry
       # both over
-      image = ../../../resources/wallpapers/${config.${moduleBase}.${moduleName}.wallpaper};
-      base16Scheme = "${pkgs.base16-schemes}/share/themes/${
-        config.${moduleBase}.${moduleName}.theme
-      }.yaml";
-      cursor = {
+      image = wallpaper;
+      base16Scheme = theme;
+        cursor = {
         name = "Bibata-Modern-Ice";
         package = pkgs.bibata-cursors;
         size = 22;
@@ -60,7 +59,8 @@ in
 
       targets = {
         waybar.enable = false;
-        firefox.profileNames = [ "default" ];
+        emacs.enable = true;
+        fish.enable = true;
       };
     };
   };

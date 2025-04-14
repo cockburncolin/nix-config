@@ -4,10 +4,10 @@
   inputs = {
     nixpkgs.url = "nixpkgs/nixos-unstable";
 
-    anyrun = {
-      url = "github:/anyrun-org/anyrun";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    # anyrun = {
+    #   url = "github:/anyrun-org/anyrun";
+    #   inputs.nixpkgs.follows = "nixpkgs";
+    # };
 
     home-manager = {
       url = "github:nix-community/home-manager";
@@ -28,7 +28,7 @@
   outputs =
     {
       self,
-      anyrun,
+      # anyrun,
       firefox-addons,
       home-manager,
       nixpkgs,
@@ -37,8 +37,8 @@
     }@inputs:
     let
       system = "x86_64-linux";
-      anyrun-hm = anyrun.homeManagerModules.default;
-      anyrun-pkgs = anyrun.packages.${pkgs.system};
+      # anyrun-hm = anyrun.homeManagerModules.default;
+      # anyrun-pkgs = anyrun.packages.${pkgs.system};
       pkgs = nixpkgs.legacyPackages.${system};
       firefox-adds = firefox-addons.packages.${system};
     in
@@ -64,9 +64,9 @@
       homeConfigurations = {
         caeser = home-manager.lib.homeManagerConfiguration {
           inherit pkgs;
-          extraSpecialArgs = { inherit anyrun-pkgs firefox-adds; };
+          extraSpecialArgs = { inherit firefox-adds; };
           modules = [
-            anyrun-hm
+            # anyrun-hm
             stylix.homeManagerModules.stylix
             ./home/hosts/desktop.nix
           ];
@@ -74,9 +74,9 @@
 
         brutus = home-manager.lib.homeManagerConfiguration {
           inherit pkgs;
-          extraSpecialArgs = { inherit anyrun-pkgs firefox-adds; };
+          extraSpecialArgs = { inherit firefox-adds; };
           modules = [
-            anyrun-hm
+            # anyrun-hm
             stylix.homeManagerModules.stylix
             ./home/hosts/laptop.nix
           ];
