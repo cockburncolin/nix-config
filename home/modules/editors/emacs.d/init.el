@@ -174,12 +174,17 @@
   :init
   (vertico-mode))
 
+;; Snippet system
+(use-package yasnippet
+  :config
+  (yas-global-mode 1))
+
 ;; Enables visual indentation markers, options for format are fill, column, character and bitmap
 (use-package highlight-indent-guides
- :init
- (setq highlight-indent-guides-method 'bitmap)
- :config
-   (add-hook 'prog-mode-hook 'highlight-indent-guides-mode))
+:init
+(setq highlight-indent-guides-method 'bitmap)
+:config
+(add-hook 'prog-mode-hook 'highlight-indent-guides-mode))
 
 (use-package golden-ratio
   :config
