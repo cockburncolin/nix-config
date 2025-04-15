@@ -8,6 +8,7 @@ in
 {
   imports = [
     (import ./anyrun.nix argSet)
+    (import ./direnv.nix argSet)
     (import ./disk-rip.nix argSet)
     (import ./ranger.nix argSet)
     (import ./stylix.nix argSet)
