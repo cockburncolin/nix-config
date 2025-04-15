@@ -20,7 +20,7 @@ in
   config = {
     # Shell aliases for shells
     home.shellAliases = {
-      ec = "emacsclient -r";
+      ec = "emacsclient -r -n";
       hmn = "home-manager news";
       hms = "home-manager switch --flake $HOME/.config/nix#$hostname -b backup";
       nrbs = "sudo nixos-rebuild switch --flake $HOME/.config/nix#$hostname --upgrade";
@@ -39,6 +39,10 @@ in
 
     programs = {
       thefuck.enable = true;
+      starship = {
+        enable = true;
+        settings = {};
+      };
     };
   };
 }
