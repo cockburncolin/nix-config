@@ -45,13 +45,9 @@
           specialArgs = { inherit inputs outputs; };
           modules = [ ./hosts/brutus ];
         };
-        pliny = nixpkgs.lib.nixosSystem {
+        nix-node01 = nixpkgs.lib.nixosSystem {
           specialArgs = { inherit inputs outputs; };
-          modules = [ ./hosts/pliny ];
-        };
-        iso = nixpkgs.lib.nixosSystem {
-          specialArgs = { inherit inputs outputs; };
-          modules = [ ./hosts/iso ];
+          modules = [ ./hosts/nix-node01 ];
         };
       };
     };

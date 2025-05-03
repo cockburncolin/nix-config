@@ -5,21 +5,21 @@
   ...
 }:
 let
-  cfg = config.custom.sshd;
+  cfg = config.custom.ssh;
 in
 {
   # module options
-  options.custom.sshd = {
+  options.custom.ssh = {
     enable = lib.mkEnableOption "Enable SSH server";
   };
 
-  config = lib.mkIf cfg.enable rec {
+  config = lib.mkIf cfg.enable {
     services.openssh = {
       enable = true;
       ports = [ 22 ];
       settings = {
         PasswordAuthentication = true;
-        PermitRootLogin = "no";
+        PermitRootLogin = "prohibit-password";
       };
     };
 
@@ -27,6 +27,6 @@ in
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIC5alTXWq3csEW3JcQrggBwIRPlrYhtrYoCnmSXA9svA"
     ];
 
-    networking.firewall.allowedTCPPorts = config.services.openssh.ports;
+    networking.firewall.allowedTCPPorts = [ 22 ];
   };
 }

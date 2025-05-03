@@ -8,10 +8,10 @@
   ];
 
   config = {
-    networking.hostName = "pliny";
+    networking.hostName = "nix-node01";
     time.timeZone = "America/Vancouver";
     custom = {
-      sshd.enable = true;
+      ssh.enable = true;
     };
   };
 }
