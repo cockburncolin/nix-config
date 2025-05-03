@@ -49,6 +49,14 @@
           specialArgs = { inherit inputs outputs; };
           modules = [ ./hosts/nix-node01 ];
         };
+        nix-node02 = nixpkgs.lib.nixosSystem {
+          specialArgs = { inherit inputs outputs; };
+          modules = [ ./hosts/nix-node02 ];
+        };
+        nix-node03 = nixpkgs.lib.nixosSystem {
+          specialArgs = { inherit inputs outputs; };
+          modules = [ ./hosts/nix-node03 ];
+        };
       };
     };
 }
