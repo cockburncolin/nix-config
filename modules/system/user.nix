@@ -48,8 +48,9 @@ in
       starship
       stow
       zoxide
-      zsh
     ];
+
+    users.mutableUsers = false;
 
     users.users.${cfg.username} = {
       isNormalUser = true;

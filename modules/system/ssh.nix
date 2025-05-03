@@ -6,6 +6,9 @@
 }:
 let
   cfg = config.custom.ssh;
+  authKeys = [
+    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIC5alTXWq3csEW3JcQrggBwIRPlrYhtrYoCnmSXA9svA"
+  ];
 in
 {
   # module options
@@ -23,9 +26,9 @@ in
       };
     };
 
-    users.users.root.openssh.authorizedKeys.keys = [
-      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIC5alTXWq3csEW3JcQrggBwIRPlrYhtrYoCnmSXA9svA"
-    ];
+    users.users.root.openssh.authorizedKeys.keys = [ ] ++ authKeys;
+
+    users.users."${config.custom.user.username}".openssh.authorizedKeys.keys = [ ] ++ authKeys;
 
     networking.firewall.allowedTCPPorts = [ 22 ];
   };
