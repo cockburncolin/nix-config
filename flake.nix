@@ -49,6 +49,10 @@
           specialArgs = { inherit inputs outputs; };
           modules = [ ./hosts/pliny ];
         };
+        iso = nixpkgs.lib.nixosSystem {
+          specialArgs = { inherit inputs outputs; };
+          modules = [ ./hosts/iso ];
+        };
       };
     };
 }

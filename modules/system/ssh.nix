@@ -16,7 +16,7 @@ in
   config = lib.mkIf cfg.enable rec {
     services.openssh = {
       enable = true;
-      ports = [ 9922 ];
+      ports = [ 22 ];
       settings = {
         PasswordAuthentication = true;
         PermitRootLogin = "no";
