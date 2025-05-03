@@ -1,5 +1,6 @@
 {
   lib,
+  inputs,
   pkgs,
   config,
   ...
@@ -37,6 +38,7 @@ in
     # shells/other user programs to install
     environment.systemPackages = with pkgs; [
       alejandra
+      inputs.agenix.packages."${system}".default
       fd
       fish
       fzf
