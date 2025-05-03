@@ -20,7 +20,7 @@ buildGoModule rec {
     echo "${version}" > cmd/kuberoCli/VERSION
   '';
 
-  buildInputs = [ upx ];
+  buildInputs = [upx];
 
   vendorHash = "sha256-muZCIMXiceIBfjlEhGFO/azrJ9sxYTDhDXSVwI1Cn2I=";
 

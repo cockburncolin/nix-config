@@ -1,0 +1,12 @@
+result
+*~
+.cache/
+elisp-autofmt-cache/
+#*#
+.#*
+auto-save-list/
+config.el
+eln-cache/
+recentf
+straight/
+transient/
