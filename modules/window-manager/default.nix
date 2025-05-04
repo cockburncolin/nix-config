@@ -46,6 +46,7 @@ in {
         serviceConfig = {
           Type = "simple";
           ExecStart = "${pkgs.hyprpaper}/bin/hyprpaper";
+          wantedBy = ["default.target"];
         };
       };
 
@@ -55,6 +56,7 @@ in {
         serviceConfig = {
           Type = "simple";
           ExecStart = "${pkgs.waybar}/bin/waybar";
+          wantedBy = ["default.target"];
         };
       };
     };

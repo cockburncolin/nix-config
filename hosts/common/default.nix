@@ -10,27 +10,18 @@
   imports = with inputs; [
     ../../modules
     disko.nixosModules.disko
-    sops-nix.nixosModules.sops
+    agenix.nixosModules.default
   ];
 
   config = {
     custom = {
-      user.enable = lib.mkDefault true;
       uefi.enable = lib.mkDefault true;
+      user.enable = lib.mkDefault true;
     };
 
-    sops = {
-      age = {
-        sshKeyPaths = ["/home/${config.custom.user.username}/.ssh/id_ed25519"];
-        keyFile = "/var/lib/sops-nix/key.txt";
-        generateKey = true;
-      };
+    age.secrets.rootpw.file = ../../secrets/rootpw.age;
+    users.users.root.hashedPasswordFile = config.age.secrets.rootpw.path;
 
-      defaultSopsFile = ../../secrets/secrets.yaml;
-      secrets."users/rootpw".neededForUsers = true;
-    };
-
-    users.users.root.hashedPasswordFile = config.sops.secrets."users/rootpw".path;
     # default fonts to install
     fonts.packages = [] ++ builtins.filter lib.attrsets.isDerivation (builtins.attrValues pkgs.nerd-fonts);
 

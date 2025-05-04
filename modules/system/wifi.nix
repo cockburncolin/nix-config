@@ -12,17 +12,14 @@ in {
   };
 
   config = lib.mkIf cfg.enable {
-    sops.secrets.wifi = {
-      sopsFile = ../../secrets/wifi.env;
-      format = "dotenv";
-    };
+    age.secrets.wifienv.file = ../../secrets/wifi.age;
 
     networking.wireless = {
       enable = true;
       # enable the ability to use wpa_gui or cli
       userControlled.enable = true;
 
-      secretsFile = config.sops.secrets.wifi.path;
+      secretsFile = config.age.secrets.wifienv.path;
       networks.Maverick.pskRaw = "ext:home_pskraw";
     };
   };
