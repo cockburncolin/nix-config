@@ -1,6 +1,5 @@
 # template for hosts
-{ ... }:
-{
+{...}: {
   imports = [
     ../common
     ./hardware-config.nix
@@ -26,7 +25,7 @@
         interface = "ens18";
       };
 
-      nameservers = [ "192.168.1.1" ];
+      nameservers = ["192.168.1.1"];
     };
     custom = {
       ssh.enable = true;

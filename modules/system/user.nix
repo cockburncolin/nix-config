@@ -4,11 +4,9 @@
   pkgs,
   config,
   ...
-}:
-let
+}: let
   cfg = config.custom.user;
-in
-{
+in {
   # module options
   options.custom.user = {
     enable = lib.mkEnableOption "Create system non root user";
@@ -21,7 +19,7 @@ in
     };
 
     additionalGroups = lib.mkOption {
-      default = [ ];
+      default = [];
       description = "List of additional groups to add to the group";
       example = lib.literalString [
         "docker"
@@ -32,23 +30,26 @@ in
   };
 
   config = lib.mkIf cfg.enable {
-    age.secrets.userpw.file = ../../secrets/userpw.age;
+    sops.secrets.userpw.neededForUsers = true;
 
-    programs.fish.enable = true;
     # shells/other user programs to install
     environment.systemPackages = with pkgs; [
       alejandra
-      inputs.agenix.packages."${system}".default
       fd
-      fish
       fzf
+      gcc
       git
       kitty
       neovim
       nushell
       ranger
+      ripgrep
+      sops
+      ssh-to-age
       starship
       stow
+      tree
+      unzip
       zoxide
     ];
 
@@ -56,8 +57,8 @@ in
 
     users.users.${cfg.username} = {
       isNormalUser = true;
-      hashedPasswordFile = config.age.secrets.userpw.path;
-      extraGroups = [ "wheel" ] ++ cfg.additionalGroups;
+      hashedPasswordFile = config.sops.secrets.userpw.path;
+      extraGroups = ["wheel"] ++ cfg.additionalGroups;
       shell = pkgs.nushell;
     };
   };

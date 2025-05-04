@@ -8,75 +8,40 @@
   modulesPath,
   ...
 }: {
-  imports = [(modulesPath + "/installer/scan/not-detected.nix")];
-
-  boot.initrd.availableKernelModules = [
-    "nvme"
-    "xhci_pci"
-    "ahci"
-    "usbhid"
-    "usb_storage"
-    "sd_mod"
+  imports = [
+    (modulesPath + "/installer/scan/not-detected.nix")
   ];
+
+  boot.initrd.availableKernelModules = ["nvme" "xhci_pci" "ahci" "usbhid" "usb_storage" "sd_mod"];
   boot.initrd.kernelModules = [];
   boot.kernelModules = ["kvm-amd"];
   boot.extraModulePackages = [];
 
   fileSystems."/" = {
-    device = "/dev/disk/by-uuid/0f318ffc-6378-4062-8fe4-f10abb18911c";
+    device = "/dev/disk/by-uuid/369ba186-173a-4bfc-a8f5-2525f45731b5";
     fsType = "btrfs";
     options = ["subvol=rootfs"];
   };
 
-  fileSystems."/nix" = {
-    device = "/dev/disk/by-uuid/0f318ffc-6378-4062-8fe4-f10abb18911c";
-    fsType = "btrfs";
-    options = ["subvol=nix"];
-  };
-
   fileSystems."/home" = {
-    device = "/dev/disk/by-uuid/0f318ffc-6378-4062-8fe4-f10abb18911c";
+    device = "/dev/disk/by-uuid/369ba186-173a-4bfc-a8f5-2525f45731b5";
     fsType = "btrfs";
     options = ["subvol=home"];
   };
 
+  fileSystems."/nix" = {
+    device = "/dev/disk/by-uuid/369ba186-173a-4bfc-a8f5-2525f45731b5";
+    fsType = "btrfs";
+    options = ["subvol=nix"];
+  };
+
   fileSystems."/boot" = {
-    device = "/dev/disk/by-uuid/337D-9CAB";
+    device = "/dev/disk/by-uuid/692D-D4DF";
     fsType = "vfat";
-    options = [
-      "fmask=0077"
-      "dmask=0077"
-    ];
+    options = ["fmask=0022" "dmask=0022"];
   };
 
-  fileSystems."/mnt/nfs" = {
-    device = "192.168.1.10:/volume2/Media";
-    fsType = "nfs4";
-  };
-
-  # Kobo
-  fileSystems."/mnt/ereader" = {
-    device = "/dev/disk/by-uuid/63F3-BC98";
-    fsType = "vfat";
-    options = [
-      "noauto"
-      "uid=colin"
-      "gid=users"
-      "fmask=0022"
-      "dmask=0022"
-    ];
-  };
-
-  # Steamdeck SD Card
-  fileSystems."/mnt/sd" = {
-    device = "/dev/disk/by-uuid/c4a520e2-33f0-45df-b4b7-f279dc318f48";
-    fsType = "ext4";
-    options = ["noauto"];
-  };
-
-  swapDevices = [
-    {device = "/dev/disk/by-uuid/a2911656-03a8-457c-91fa-2674d276fdea";}
-  ];
+  swapDevices = [];
 
   # Enables DHCP on each ethernet and wireless interface. In case of scripted networking
   # (the default) this is the recommended approach. When using systemd-networkd it's

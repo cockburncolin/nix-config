@@ -4,20 +4,36 @@
   config,
   inputs,
   outputs,
+  pkgs,
   ...
-}:
-{
+}: {
   imports = with inputs; [
     ../../modules
-    agenix.nixosModules.default
     disko.nixosModules.disko
+    sops-nix.nixosModules.sops
   ];
 
   config = {
-    custom.user.enable = lib.mkDefault true;
-    custom.uefi.enable = lib.mkDefault true;
+    custom = {
+      user.enable = lib.mkDefault true;
+      uefi.enable = lib.mkDefault true;
+    };
 
-    age.identityPaths = [ "/home/${config.custom.user.username}/.ssh/id_ed25519" ];
+    sops = {
+      age = {
+        sshKeyPaths = ["/home/${config.custom.user.username}/.ssh/id_ed25519"];
+        keyFile = "/var/lib/sops-nix/key.txt";
+        generateKey = true;
+      };
+
+      defaultSopsFile = ../../secrets/secrets.yaml;
+    };
+
+    # default fonts to install
+    fonts.packages = [] ++ builtins.filter lib.attrsets.isDerivation (builtins.attrValues pkgs.nerd-fonts);
+
+    # default system wide packages to install
+    environment.systemPackages = with pkgs; [cmake clang-tools];
 
     nixpkgs = {
       overlays = with outputs.overlays; [

@@ -1,6 +1,5 @@
 # template for hosts
-{ ... }:
-{
+{...}: {
   imports = [
     ../common
     ./hardware-config.nix
