@@ -30,7 +30,7 @@ in {
   };
 
   config = lib.mkIf cfg.enable {
-    sops.secrets.userpw.neededForUsers = true;
+    sops.secrets."users/userpw".neededForUsers = true;
 
     # shells/other user programs to install
     environment.systemPackages = with pkgs; [
@@ -57,7 +57,7 @@ in {
 
     users.users.${cfg.username} = {
       isNormalUser = true;
-      hashedPasswordFile = config.sops.secrets.userpw.path;
+      hashedPasswordFile = config.sops.secrets."users/userpw".path;
       extraGroups = ["wheel"] ++ cfg.additionalGroups;
       shell = pkgs.nushell;
     };

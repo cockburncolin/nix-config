@@ -27,8 +27,10 @@
       };
 
       defaultSopsFile = ../../secrets/secrets.yaml;
+      secrets."users/rootpw".neededForUsers = true;
     };
 
+    users.users.root.hashedPasswordFile = config.sops.secrets."users/rootpw".path;
     # default fonts to install
     fonts.packages = [] ++ builtins.filter lib.attrsets.isDerivation (builtins.attrValues pkgs.nerd-fonts);
 
