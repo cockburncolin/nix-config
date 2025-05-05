@@ -9,7 +9,7 @@ in {
   options.custom.wm = {
     enable = lib.mkEnableOption "Enable GUI";
   };
-
+  
   config = lib.mkIf cfg.enable {
     environment.systemPackages = with pkgs; [
       hyprpaper
@@ -46,7 +46,6 @@ in {
         serviceConfig = {
           Type = "simple";
           ExecStart = "${pkgs.hyprpaper}/bin/hyprpaper";
-          wantedBy = ["default.target"];
         };
       };
 
@@ -56,7 +55,6 @@ in {
         serviceConfig = {
           Type = "simple";
           ExecStart = "${pkgs.waybar}/bin/waybar";
-          wantedBy = ["default.target"];
         };
       };
     };

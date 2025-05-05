@@ -35,11 +35,13 @@ in {
     # shells/other user programs to install
     environment.systemPackages = with pkgs; [
       alejandra
+      direnv
       fd
       fzf
       gcc
       git
       kitty
+      lazygit
       neovim
       nushell
       ranger
@@ -52,8 +54,6 @@ in {
       unzip
       zoxide
     ];
-
-    users.mutableUsers = false;
 
     users.users.${cfg.username} = {
       isNormalUser = true;
