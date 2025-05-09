@@ -12,6 +12,7 @@ in {
   
   config = lib.mkIf cfg.enable {
     environment.systemPackages = with pkgs; [
+      tmux
       hyprpaper
       mako # notification system developed by swaywm maintainer
       sddm-dracula
@@ -33,7 +34,9 @@ in {
     programs.hyprland = {
       enable = true;
       xwayland.enable = true;
+      withUWSM = true;
     };
+
     # Enable the gnome-keyring secrets vault.
     # Will be exposed through DBus to programs willing to store secrets.
     services.gnome.gnome-keyring.enable = true;
@@ -43,6 +46,8 @@ in {
       hyprpaper = {
         enable = true;
         description = "hyprpaper is a fast, IPC-controlled wallpaper utility for Hyprland";
+        after = [ "graphical-session.target" ];
+        wantedBy = [ "graphical-session.target" ];
         serviceConfig = {
           Type = "simple";
           ExecStart = "${pkgs.hyprpaper}/bin/hyprpaper";
@@ -52,9 +57,14 @@ in {
       waybar = {
         enable = true;
         description = "Highly customizable Wayland bar for Sway and Wlroots based compositors";
+        after = [ "graphical-session.target" ];
+        wantedBy = [ "graphical-session.target" ];
         serviceConfig = {
-          Type = "simple";
+          Type = "exec";
+          ExecCondition = "${pkgs.systemd}/lib/systemd/systemd-xdg-autostart-condition wlroots:sway:Wayfire:labwc:Hyprland \"\"";
           ExecStart = "${pkgs.waybar}/bin/waybar";
+          ExecReload = "kill -SIGUSR2 $MAINPID";
+          Restart = "on-failure";
         };
       };
     };

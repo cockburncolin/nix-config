@@ -21,7 +21,7 @@ in {
     additionalGroups = lib.mkOption {
       default = [];
       description = "List of additional groups to add to the group";
-      example = lib.literalString [
+      example = [
         "docker"
         "networkmanager"
       ];
@@ -35,9 +35,11 @@ in {
     # shells/other user programs to install
     environment.systemPackages = with pkgs; [
       alejandra
+      bat
       direnv
       fd
       fzf
+      eza
       gcc
       git
       kitty
@@ -55,11 +57,16 @@ in {
       zoxide
     ];
 
+    programs.zsh = {
+      enable = true;
+      enableGlobalCompInit = false;
+    };
+
     users.users.${cfg.username} = {
       isNormalUser = true;
       hashedPasswordFile = config.age.secrets.userpw.path;
       extraGroups = ["wheel"] ++ cfg.additionalGroups;
-      shell = pkgs.nushell;
+      shell = pkgs.zsh;
     };
   };
 }
